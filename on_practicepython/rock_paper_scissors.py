@@ -4,10 +4,11 @@ message of congratulations to the winner, and ask if the players want to start a
 
 to_continue = ""
 while True:
+    if to_continue == "n":
+        print("Ok bye")
+        break
     gamer1 = input("First gamer must choose :\n- 1 = rock\n- 2 = paper\n- 3 = scissors\nYour choice: ")
     gamer2 = input("second gamer must choose :\n- 1 = rock\n- 2 = paper\n- 3 = scissors\nYour choice: ")
-    if to_continue == "n":
-        break
     if gamer1 == gamer2:
         print("nobody win !!!")
     elif (gamer1 == 1) and (gamer2 == 3):
