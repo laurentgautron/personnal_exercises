@@ -1,0 +1,29 @@
+magasins
+	id
+	adresses
+	nom
+	nom société
+
+produits
+	id
+	nom
+	quantité
+	prix
+
+achats
+	id
+	prix
+	date
+
+liaisons : 1 achat ---> plusieurs produits
+		   1 produits ---> plusieurs achats
+		   1 achat ---> un magasin
+		   1 magasin ---> plusieurs achts
+		   1 magaqsin ---> plusieurs produits
+		   1 produit ---> plusieurs magasins
+
+		   magasins ::  un à plusieurs :: achats
+		   magasins :: plusieurs à plusieurs :: produits
+		   produits :: plusieurs à plusieurs ;; achats
+
+		   
