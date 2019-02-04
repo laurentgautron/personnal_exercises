@@ -1,45 +1,13 @@
-magasins
-	id
-	adresses
-	nom
-	nom société
 
-produits
-	id
-	nom
-	catégorie
-	sous_catégorie
-	quantité
-	prix
-
-achats
-	id
-	prix
-	date
-
-liaisons : 1 achat ---> plusieurs produits
-		   1 produits ---> plusieurs achats
-		   1 achat ---> un magasin
-		   1 magasin ---> plusieurs achts
-		   1 magaqsin ---> plusieurs produits
-		   1 produit ---> plusieurs magasins
-
-		   magasins ::  un à plusieurs :: achats
-		   magasins :: plusieurs à plusieurs :: produits
-		   produits :: plusieurs à plusieurs ;; achats
-
-mettre automatiquement la date du jour
+Mettre automatiquement la date du jour
 demander quoi faire: visualiser les pourcentages, remplir un ticket de magasin, rechercher un produit, ...
-	demander le magasin tant que le magasin n'est pas fini ( rentrer F )
-		demander un produit
-		recommencer jusqu'à la fin pour le magasin
-	demander une visualisation tant que pas vouloir quitter
-		par produits
-		par jour
-		par catégorie
-		par sous-catégorie
-		par mois
-		par semaine
-		par an
-		pour l'année en court
-	demander le plus cher, le moins cher, le plus souvent
+    si remplir ticket de magasin:
+        demander le magasin
+        tant que le magasin n'est pas fini ( rentrer F ):
+            demander un produit
+    si visualiation des pourcentages:
+        demander une visualisation tant que pas vouloir quitter (exit)
+            demander quelle visualisation: par produits, par jour, par catégorie, par sous-catégorie, ...
+                                           par mois, par semaine, par an, pour l'année en court
+
+liste non exhausive: le moins cher, le plus cher, le plus souvent, le magasin préfé, l'heure préférée, le jour,...
