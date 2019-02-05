@@ -10,7 +10,6 @@ while True:
         break
     else:
         NUMBER = random.randint(1, 9)
-        print(NUMBER)
         COUNTER = 1
         USER_NUMBER = input("guess the NUMBER (or type 'exit' if you want to quit): ")
         while USER_NUMBER not in (str(NUMBER), 'exit'):
