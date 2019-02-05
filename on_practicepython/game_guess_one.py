@@ -14,11 +14,10 @@ while True:
         COUNTER = 1
         USER_NUMBER = input("guess the NUMBER (or type 'exit' if you want to quit): ")
         while USER_NUMBER not in (str(NUMBER), 'exit'):
-            USER_NUMBER = int(USER_NUMBER)
-            print(USER_NUMBER < NUMBER)
+            print(int(USER_NUMBER) < NUMBER)
             if USER_NUMBER == "exit":
                 break
-            if USER_NUMBER < NUMBER:
+            elif int(USER_NUMBER) < NUMBER:
                 print("it's greater")
             else:
                 print("it's smaller")
