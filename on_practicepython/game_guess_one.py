@@ -1,34 +1,34 @@
-""" Generate a random number between 1 and 9 (including 1 and 9). Ask the user to guess the 
-number, then tell them whether they guessed too low, too high, or exactly right."""
+""" Generate a random NUMBER between 1 and 9 (including 1 and 9). Ask the user to guess the
+NUMBER, then tell them whether they guessed too low, too high, or exactly right."""
 
 import random
 
-want_continue = ""
+WANT_CONTINUE = ""
 while True:
-    if want_continue in  ("exit", "n"):
+    if WANT_CONTINUE in  ("exit", "n"):
         print("ok, Bye !")
         break
     else:
-        number = random.randint(1, 9)
-        print(number)
-        counter = 1
-        user_number = input("guess the number (or type 'exit' if you want to quit): ")
-        while user_number not in (str(number), 'exit'):
-            user_number = int(user_number)
-            print(user_number < number)
-            if user_number == "exit":
+        NUMBER = random.randint(1, 9)
+        print(NUMBER)
+        COUNTER = 1
+        USER_NUMBER = input("guess the NUMBER (or type 'exit' if you want to quit): ")
+        while USER_NUMBER not in (str(NUMBER), 'exit'):
+            USER_NUMBER = int(USER_NUMBER)
+            print(USER_NUMBER < NUMBER)
+            if USER_NUMBER == "exit":
                 break
-            if user_number < number:
+            if USER_NUMBER < NUMBER:
                 print("it's greater")
             else:
                 print("it's smaller")
-            user_number = input("try again: ")
-            counter += 1
-        if user_number == "exit":
-            print("you loose !! after {} try".format(counter))
+            USER_NUMBER = input("try again: ")
+            COUNTER += 1
+        if USER_NUMBER == "exit":
+            print("you loose !! after {} try".format(COUNTER))
             break
         else:
-            print("you win in {} try !!".format(counter))
-            want_continue = input("do you want  play again (y/n)? ")
-            while want_continue not in ("y", "n"):
-                want_continue = input(" you type {}, it's not a good answer ! ".format(want_continue))
+            print("you win in {} try !!".format(COUNTER))
+            WANT_CONTINUE = input("do you want  play again (y/n)? ")
+            while WANT_CONTINUE not in ("y", "n"):
+                WANT_CONTINUE = input(" you type {}, it's not a good answer ! ".format(WANT_CONTINUE))
