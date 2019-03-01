@@ -7,7 +7,7 @@ class StoreProduct:
     def create():
         conn = psycopg2.connect(dbname="shopping", user="lolo", host="localhost", password="cestmoi")
         cur = conn.cursor()
-        sql_create = """CREATE TABLE store_product (product_id INTEGER, store_id INTEGER,
+        sql_create = """CREATE TABLE IF NOT EXISTS store_product (product_id INTEGER, store_id INTEGER,
                         PRIMARY KEY(product_id, store_id),
                         CONSTRAINT store_product_product_id_fkey FOREIGN KEY (product_id)
                         REFERENCES product(product_id),
