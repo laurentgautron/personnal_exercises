@@ -17,3 +17,4 @@ class PurchaseProduct:
         cur.close()
         conn.commit()
         conn.close()
+
