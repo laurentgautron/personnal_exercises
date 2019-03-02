@@ -1,3 +1,4 @@
+import psycopg2
 from purchase import Purchase
 from store import Store
 from product import Product
@@ -17,10 +18,11 @@ class DatabaseConnection:
         PurchaseProduct.create()
         StoreProduct.create()
 
-    def insert_datas(self):
+    @staticmethod
+    def insert_datas():
         Purchase.insert()
-        Store.insert()
-        Product.insert()
-        PurchaseStore.insert()
-        PurchaseProduct.insert()
-        StoreProduct.insert()
+        #Store.insert()
+        #Product.insert()
+        #PurchaseStore.insert()
+        #PurchaseProduct.insert()
+        #StoreProduct.insert()
