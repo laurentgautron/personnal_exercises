@@ -9,6 +9,18 @@ from store_product import StoreProduct
 
 class DatabaseConnection:
 
+    def __init__(self):
+        conn = psycopg2.connect(dbname='shopping', user='lolo', password='cestmoi', host='localhost')
+        cur = conn.cursor()
+        sql_init = """ALTER DATABASE shopping SET datestyle TO 'ISO, DMY';"""
+        cur.execute(sql_init)
+        conn.commit()
+        cur.close()
+        conn.close()
+        self.purchase = Purchase()
+        self.store = Store()
+        self.product = Product()
+
     @staticmethod
     def create_tables():
         Purchase.create()
@@ -18,11 +30,10 @@ class DatabaseConnection:
         PurchaseProduct.create()
         StoreProduct.create()
 
-    @staticmethod
-    def insert_datas():
-        Purchase.insert()
-        #Store.insert()
-        #Product.insert()
+    def insert_datas(self):
+        self.purchase.insert()
+        self.store.insert()
+        self.product.insert()
         #PurchaseStore.insert()
         #PurchaseProduct.insert()
         #StoreProduct.insert()

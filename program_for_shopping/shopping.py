@@ -2,5 +2,6 @@ from databaseconnection import DatabaseConnection
 
 
 if __name__ == "__main__":
+    database = DatabaseConnection()
     DatabaseConnection.create_tables()
-    DatabaseConnection.insert_datas()
+    database.insert_datas()
