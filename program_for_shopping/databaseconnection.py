@@ -20,6 +20,7 @@ class DatabaseConnection:
         self.purchase = Purchase()
         self.store = Store()
         self.product = Product()
+        self.purchase_product = PurchaseProduct()
 
     @staticmethod
     def create_tables():
@@ -34,6 +35,6 @@ class DatabaseConnection:
         self.purchase.insert()
         self.store.insert()
         self.product.insert()
-        #PurchaseStore.insert()
+        self.purchase_product.insert()
         #PurchaseProduct.insert()
         #StoreProduct.insert()

@@ -26,7 +26,7 @@ class Purchase:
         sql_create = """CREATE TABLE IF NOT EXISTS purchase (
                         purchase_id serial PRIMARY KEY, date DATE,
                         purchase_time TIME,
-                        total_price DECIMAL(4,2),
+                        total_price DECIMAL(5,2),
                         nb_article INT,
                         carte_code INT)"""
         cur.execute(sql_create)

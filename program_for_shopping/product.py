@@ -7,28 +7,29 @@ class Product:
                 'boissons', 'hygiène', 'entretiens', 'chats']
     SUBCATEGORY = ['pommes', 'poires', 'chocolat', 'pain', 'boeuf', 'porc', 'saumon']
 
-    def insert_product(self):
+    @staticmethod
+    def insert_product():
         product_name = input('rentrez le nom du produit: ')
         for counter, values in enumerate(Product.CATEGORY):
-            print(counter, '-', values)
+            print(counter + 1, '-', values)
         product_category = input('choisir une catégorie ( ou rentrer une nouvelle si vous ne la trouvez pas dans \
                                   la liste: ')
-        if product_category not in Product.CATEGORY:
+        if Product.CATEGORY[int(product_category)] not in Product.CATEGORY:
             Product.CATEGORY.append(product_category)
         else:
             product_category = Product.CATEGORY[int(product_category)]
         for counter, values in enumerate(Product.SUBCATEGORY):
-            print(counter, '-', values)
+            print(counter + 1, '-', values)
         sub_category = input('choisir une sous_catégorie ( ou rentrer une nouvelle si vous ne la trouvez pas dans \
                                   la liste: ')
-        if sub_category not in Product.SUBCATEGORY:
+        if (int(sub_category) not in range(0, len(Product.CATEGORY))) and (sub_category not in Product.SUBCATEGORY):
             Product.SUBCATEGORY.append(sub_category)
         else:
             sub_category = Product.SUBCATEGORY[int(sub_category)]
-        processed_food = False
+        processed_food = True
         transform = input('la nourriture est-elle transformée (o/n)?, ')
         if transform == 'n':
-            processed_food = True
+            processed_food = False
         return product_name, product_category, sub_category, processed_food
 
     @staticmethod
