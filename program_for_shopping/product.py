@@ -1,4 +1,5 @@
 import psycopg2
+import json
 
 
 class Product:
@@ -8,28 +9,32 @@ class Product:
     SUBCATEGORY = ['pommes', 'poires', 'chocolat', 'pain', 'boeuf', 'porc', 'saumon']
 
     @staticmethod
-    def insert_product():
+    def new_sub_category():
+        new_sub = input('entrer la nouvelle sous_categorie (taper entrée si nulle): ')
+        return new_sub
+
+    def insert_product(self):
         product_name = input('rentrez le nom du produit: ')
-        for counter, values in enumerate(Product.CATEGORY):
-            print(counter + 1, '-', values)
-        product_category = input('choisir une catégorie ( ou rentrer une nouvelle si vous ne la trouvez pas dans \
-                                  la liste: ')
-        if Product.CATEGORY[int(product_category)] not in Product.CATEGORY:
-            Product.CATEGORY.append(product_category)
-        else:
-            product_category = Product.CATEGORY[int(product_category)]
-        for counter, values in enumerate(Product.SUBCATEGORY):
-            print(counter + 1, '-', values)
-        sub_category = input('choisir une sous_catégorie ( ou rentrer une nouvelle si vous ne la trouvez pas dans \
-                                  la liste: ')
-        if (int(sub_category) not in range(0, len(Product.CATEGORY))) and (sub_category not in Product.SUBCATEGORY):
-            Product.SUBCATEGORY.append(sub_category)
-        else:
-            sub_category = Product.SUBCATEGORY[int(sub_category)]
         processed_food = True
         transform = input('la nourriture est-elle transformée (o/n)?, ')
         if transform == 'n':
             processed_food = False
+        with open('categories.json', 'a') as cat_file:
+            categories = json.dumps(cat_file)
+        for indice, cat in enumerate(categories):
+            print(indice, '-', cat)
+        product_category = input('choisissez une catégorie (entrer "n" pour enregistrer une nouvelle): ')
+        if product_category == 'n':
+            product_category = input('le nom de la nouvelle catégorie: ')
+            sub_category = self.new_sub_category()
+        else:
+            product_category = categories[int(product_category)]
+            for indice, value in enumerate(product_category):
+                    print(indice, '-', value)
+            sub_category = input('choisissez la sous catégorie (taper "n" si c\'est une nouvelle): ')
+            if sub_category == 'n':
+                sub_category = self.new_sub_category()
+        categories[product_category] =
         return product_name, product_category, sub_category, processed_food
 
     @staticmethod
