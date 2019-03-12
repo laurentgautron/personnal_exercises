@@ -43,3 +43,12 @@ class Purchase:
         conn.commit()
         cur.close()
         conn.close()
+
+    @staticmethod
+    def get_last_purchase_and_nbarticle():
+        conn = psycopg2.connect(dbname='shopping', user ='lolo', password='cestmoi', host='localhost')
+        cur = conn.cursor()
+        sql = """SELECT purchase_id, nb_articles FROM purchase WHERE purchase_id = (SELECT max(purchase_id) FROM purchase) """
+        cur.execute(sql)
+        last_purchase_id, nbarticles = cur.fetchone()
+        return last_purchase_id, nbarticles

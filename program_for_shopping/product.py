@@ -4,38 +4,54 @@ import json
 
 class Product:
 
-    CATEGORY = ['fruits', 'légumes', 'féculents', 'viandes', 'poissons', 'boulangerie', 'patisserie', 'sucreries',
-                'boissons', 'hygiène', 'entretiens', 'chats']
-    SUBCATEGORY = ['pommes', 'poires', 'chocolat', 'pain', 'boeuf', 'porc', 'saumon']
+    @staticmethod
+    def new_category():
+        return input('écrivez la nouvelle catégorie: ')
 
     @staticmethod
-    def new_sub_category():
-        new_sub = input('entrer la nouvelle sous_categorie (taper entrée si nulle): ')
-        return new_sub
+    def new_sub_cat():
+        return input('entrez la nouvelle sous_catégorie: ')
+
+    @staticmethod
+    def add_a_category(categories, sub_cat, category, new_cat):
+        if new_cat:
+            categories[category] = [sub_cat]
+        else:
+            categories[category].append(sub_cat)
+        with open('cat.json', 'w') as cat_file:
+            json.dump(categories, cat_file, indent=4)
 
     def insert_product(self):
+        with open('cat.json', 'r') as file:
+            categories = json.load(file)
+        new_cat = new_sub_cat = False
+        list_cat = []
+        for indice, cat in enumerate(categories):
+            list_cat.append(cat)
+            print(indice + 1, '-', cat)
+        category = int(input('choisissez une catégorie (entrer 0 si nouvelle catégorie): '))
+        if category == 0:
+            category = self.new_category()
+            sub_cat = self.new_sub_cat()
+            new_cat = True
+        else:
+            category = list_cat[category - 1]
+            for indice, sub in enumerate(categories[category]):
+                print(indice + 1, '-', sub)
+            sub_cat = int(input('choisissez une sous-catégorie (entrer 0 si nouvelle): '))
+            if sub_cat == 0:
+                sub_cat = self.new_sub_cat()
+                new_sub_cat = True
+            else:
+                sub_cat = categories[category][sub_cat]
         product_name = input('rentrez le nom du produit: ')
         processed_food = True
         transform = input('la nourriture est-elle transformée (o/n)?, ')
         if transform == 'n':
             processed_food = False
-        with open('categories.json', 'a') as cat_file:
-            categories = json.dumps(cat_file)
-        for indice, cat in enumerate(categories):
-            print(indice, '-', cat)
-        product_category = input('choisissez une catégorie (entrer "n" pour enregistrer une nouvelle): ')
-        if product_category == 'n':
-            product_category = input('le nom de la nouvelle catégorie: ')
-            sub_category = self.new_sub_category()
-        else:
-            product_category = categories[int(product_category)]
-            for indice, value in enumerate(product_category):
-                    print(indice, '-', value)
-            sub_category = input('choisissez la sous catégorie (taper "n" si c\'est une nouvelle): ')
-            if sub_category == 'n':
-                sub_category = self.new_sub_category()
-        categories[product_category] =
-        return product_name, product_category, sub_category, processed_food
+        if new_sub_cat or new_cat:
+            self.add_a_category(categories, sub_cat, category, new_cat)
+        return product_name, category, sub_cat, processed_food
 
     @staticmethod
     def create():
