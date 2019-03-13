@@ -21,7 +21,7 @@ class Product:
         with open('cat.json', 'w') as cat_file:
             json.dump(categories, cat_file, indent=4)
 
-    def insert_product(self):
+    def insert_product(self, product_name):
         with open('cat.json', 'r') as file:
             categories = json.load(file)
         new_cat = new_sub_cat = False
@@ -44,7 +44,6 @@ class Product:
                 new_sub_cat = True
             else:
                 sub_cat = categories[category][sub_cat]
-        product_name = input('rentrez le nom du produit: ')
         processed_food = True
         transform = input('la nourriture est-elle transformée (o/n)?, ')
         if transform == 'n':
@@ -68,12 +67,39 @@ class Product:
         conn.commit()
         conn.close()
 
-    def insert(self):
+    def insert(self, product_name):
         conn = psycopg2.connect(dbname="shopping", user="lolo", host="localhost", password="cestmoi")
         cur = conn.cursor()
         sql_insert = """INSERT INTO product(product_name, product_category, sub_category, processed_food)
                         VALUES(%s, %s, %s, %s)"""
-        cur.execute(sql_insert, self.insert_product())
+        cur.execute(sql_insert, (self.insert_product(), product_name))
         conn.commit()
         cur.close()
         conn.close()
+
+    @staticmethod
+    def get_last_product():
+        product_name = input('entrez le nom du produit: ')
+        conn = psycopg2.connect(dbname='shopping', user='lolo', password='cestmoi', host='localhost')
+        cur = conn.cursor()
+        sql = """SELECT product_id FROM product WHERE product.product_name = 'boudin' """
+        cur.execute(sql)
+        result = cur.fetchone()
+        conn.commit()
+        cur.close()
+        conn.close()
+        if not result:
+            print('nouveau produit !!')
+            self.insert(product_name)
+            conn = psycopg2.connect(dbname='shopping', user='lolo', password='cestmoi', host='localhost')
+            cur = conn.cursor()
+            sql = """SELECT product_id FROM product WHERE product_id = (SELECT MAX(product_id) FROM product)"""
+            cur.execute(sql)
+            result = cur.fetchone()
+            product_id = result[0]
+            conn.commit()
+            cur.close()
+            conn.close()
+        else:
+            product_id = result[0]
+        return product_id

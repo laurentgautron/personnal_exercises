@@ -5,7 +5,6 @@ class PurchaseProduct:
 
     @staticmethod
     def insert_menu():
-        #search product in store_product if product is already recovered
         price = input('entrer le prix du produit: ')
         weight = input('entrer le poids du produit (taper entrée si null): ')
         return price, weight
@@ -33,7 +32,8 @@ class PurchaseProduct:
         conn = psycopg2.connect(dbname="shopping", user="lolo", host="localhost", password="cestmoi")
         cur = conn.cursor()
         sql_insert = """INSERT INTO purchase_product(purchase_id, product_id, price, weight) VALUES (%s, %s, %s, %s);"""
-        cur.execute(sql_insert, (last_purchase, product, self.insert_menu()))
+        price, weight = self.insert_menu()
+        cur.execute(sql_insert, (last_purchase, product, price, weight))
         conn.commit()
         cur.close()
         conn.close()
