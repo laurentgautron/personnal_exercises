@@ -71,19 +71,17 @@ class Product:
         conn = psycopg2.connect(dbname="shopping", user="lolo", host="localhost", password="cestmoi")
         cur = conn.cursor()
         sql_insert = """INSERT INTO product(product_name, product_category, sub_category, processed_food)
-                        VALUES(%s, %s, %s, %s)"""
-        cur.execute(sql_insert, (self.insert_product(), product_name))
+                        VALUES(%s, %s, %s, %s);"""
+        cur.execute(sql_insert, self.insert_product(product_name))
         conn.commit()
         cur.close()
         conn.close()
 
-    @staticmethod
-    def get_last_product():
+    def get_last_product(self):
         product_name = input('entrez le nom du produit: ')
         conn = psycopg2.connect(dbname='shopping', user='lolo', password='cestmoi', host='localhost')
         cur = conn.cursor()
-        sql = """SELECT product_id FROM product WHERE product.product_name = 'boudin' """
-        cur.execute(sql)
+        cur.execute("SELECT product_id FROM product WHERE product.product_name = %s;", (product_name, ))
         result = cur.fetchone()
         conn.commit()
         cur.close()
@@ -93,8 +91,7 @@ class Product:
             self.insert(product_name)
             conn = psycopg2.connect(dbname='shopping', user='lolo', password='cestmoi', host='localhost')
             cur = conn.cursor()
-            sql = """SELECT product_id FROM product WHERE product_id = (SELECT MAX(product_id) FROM product)"""
-            cur.execute(sql)
+            cur.execute("SELECT MAX(product_id) FROM product;")
             result = cur.fetchone()
             product_id = result[0]
             conn.commit()

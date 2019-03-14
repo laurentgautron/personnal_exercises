@@ -2,9 +2,21 @@
     "fruits": [
         "pommes",
         "poires",
-        "oranges"
+        "oranges",
+        "cerises",
+        "kiwi"
     ],
     "viandes": [
         "porc"
+    ],
+    "hygi\u00e8ne": [
+        "",
+        "lavabo"
+    ],
+    "c\u00e9r\u00e9ales": [
+        "pain"
+    ],
+    "produits laitiers": [
+        "fromages"
     ]
 }
