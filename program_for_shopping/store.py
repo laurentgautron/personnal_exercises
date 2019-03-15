@@ -60,7 +60,9 @@ class Store:
         conn = psycopg2.connect(dbname="shopping", user="lolo", host="localhost", password="cestmoi")
         cur = conn.cursor()
         sql_insert = """INSERT INTO store(store_name, road_number, road, city, postcode) VALUES (%s, %s, %s, %s, %s)"""
-        cur.execute(sql_insert, self.insert_menu())
+        menu_datas = self.insert_menu()
+        cur.execute(sql_insert, menu_datas)
         conn.commit()
         cur.close()
         conn.close()
+        return menu_datas[0]

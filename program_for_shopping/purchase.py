@@ -39,20 +39,22 @@ class Purchase:
         cur = conn.cursor()
         sql = """INSERT INTO purchase (date, purchase_time, total_price, nb_article, carte_code) 
                  VALUES (%s, %s, %s, %s, %s)"""
-        cur.execute(sql, self.insert_menu())
+        menu_datas = self.insert_menu()
+        cur.execute(sql, menu_datas)
         conn.commit()
         cur.close()
         conn.close()
+        return menu_datas[0], menu_datas[3]
 
-    @staticmethod
-    def get_last_purchase_and_nbarticles():
-        conn = psycopg2.connect(dbname='shopping', user ='lolo', password='cestmoi', host='localhost')
-        cur = conn.cursor()
-        sql = """SELECT purchase_id, nb_article FROM purchase 
-                 WHERE purchase_id = (SELECT max(purchase_id) FROM purchase) """
-        cur.execute(sql)
-        last_purchase_id, nbarticles = cur.fetchone()
-        conn.commit()
-        cur.close()
-        conn.close()
-        return last_purchase_id, nbarticles
+    #@staticmethod
+    #def get_last_purchase_and_nbarticles():
+    #    conn = psycopg2.connect(dbname='shopping', user ='lolo', password='cestmoi', host='localhost')
+    #    cur = conn.cursor()
+    #    sql = """SELECT purchase_id, nb_article FROM purchase
+    #             WHERE purchase_id = (SELECT max(purchase_id) FROM purchase) """
+    #    cur.execute(sql)
+    #    last_purchase_id, nbarticles = cur.fetchone()
+    #    conn.commit()
+    #    cur.close()
+    #    conn.close()
+    #    return last_purchase_id, nbarticles

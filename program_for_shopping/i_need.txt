@@ -1,0 +1,9 @@
+need :
+    create function to insert values in purchase_store
+                                     in purchase_product
+                                     in store_product
+
+    to be able write a price with ","
+
+    write some details for the weight: kilos( one or two number ) grams ( 3 number )
+

@@ -34,13 +34,12 @@ class Shopping:
     def insert_datas(self):
         purch = 'o'
         while purch == 'o':
-            self.purchase.insert()
-            self.store.insert()
-            last_purchase, nbarticles = Purchase.get_last_purchase_and_nbarticles()
+            last_purchase, nbarticles = self.purchase.insert()
+            store_id = self.store.insert()
+            #purchase_store(last_purchase, store_id)
             for article in range(0, nbarticles):
                 print('enregistrer l\'article n° ', article + 1)
-                self.purchase_product.insert(last_purchase, self.product.get_last_product())
-
+                self.purchase_product.insert(last_purchase, self.product.insert())
             purch = input('enregistrer un autre achat (o/n)? ')
 
 
