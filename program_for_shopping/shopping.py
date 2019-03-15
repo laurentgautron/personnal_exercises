@@ -40,6 +40,7 @@ class Shopping:
             for article in range(0, nbarticles):
                 print('enregistrer l\'article n° ', article + 1)
                 self.purchase_product.insert(last_purchase, self.product.get_last_product())
+
             purch = input('enregistrer un autre achat (o/n)? ')
 
 

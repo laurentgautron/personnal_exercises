@@ -11,12 +11,21 @@
     ],
     "hygi\u00e8ne": [
         "",
-        "lavabo"
+        "lavabo",
+        "poubelle"
     ],
     "c\u00e9r\u00e9ales": [
-        "pain"
+        "pain",
+        "riz"
     ],
     "produits laitiers": [
         "fromages"
+    ],
+    "l\u00e9gumes": [
+        "courgettes",
+        "carottes"
+    ],
+    "confisserie": [
+        "chocolat"
     ]
 }
