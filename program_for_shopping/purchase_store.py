@@ -18,3 +18,12 @@ class PurchaseStore:
         cur.close()
         conn.commit()
         conn.close()
+
+    def insert(self, purchase, store):
+        conn = psycopg2.connect(dbname='shopping', user='lolo', password='cestmoi', host='localhost')
+        cur = conn.cursor()
+        sql_insert = """INSERT INTO purchase_store (purchase_id, store_id) VALUES (%s, %s)"""
+        cur.execute(sql_insert, (purchase, store))
+        conn.commit()
+        cur.close()
+        conn.close()

@@ -21,6 +21,7 @@ class Shopping:
         self.store = Store()
         self.product = Product()
         self.purchase_product = PurchaseProduct()
+        self.purchase_store = PurchaseStore()
 
     @staticmethod
     def create_tables():
@@ -35,8 +36,8 @@ class Shopping:
         purch = 'o'
         while purch == 'o':
             last_purchase, nbarticles = self.purchase.insert()
-            store_id = self.store.insert()
-            #purchase_store(last_purchase, store_id)
+            store_name = self.store.insert()
+            self.purchase_store.insert(last_purchase, store_name)
             for article in range(0, nbarticles):
                 print('enregistrer l\'article n° ', article + 1)
                 self.purchase_product.insert(last_purchase, self.product.insert())
