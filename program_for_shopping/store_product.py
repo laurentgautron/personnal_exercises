@@ -17,3 +17,22 @@ class StoreProduct:
         cur.close()
         conn.commit()
         conn.close()
+
+    @staticmethod
+    def find_product_in_store(store, product):
+        conn = psycopg2.connect(dbname="shopping", user="lolo", password="cestmoi", host="localhost")
+        cur = conn.cursor()
+        cur.execute("""SELECT count(store_id) FROM store_product
+                       WHERE product_id = %s AND store_id = %s""", (product, store))
+        result = cur.fetchall()
+        if not result:
+            return False
+
+    def insert(self, store, product):
+        if not self.find_product_in_store(store, product):
+            conn = psycopg2.connect(dbname="shopping", user="lolo", password="cestmoi", host="localhost")
+            cur = conn.cursor()
+            cur.execute("INSERT INTO store_product VALUES (%s, %s);", (product, store))
+            conn.commit()
+            cur.close()
+            conn.close()

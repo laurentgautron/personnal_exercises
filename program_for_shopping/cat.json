@@ -4,7 +4,8 @@
         "poires",
         "oranges",
         "cerises",
-        "kiwi"
+        "kiwi",
+        "fraises"
     ],
     "viandes": [
         "porc"
@@ -27,5 +28,8 @@
     ],
     "confisserie": [
         "chocolat"
+    ],
+    "condiments": [
+        "\u00e9pices"
     ]
 }

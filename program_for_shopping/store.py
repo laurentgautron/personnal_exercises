@@ -4,6 +4,14 @@ import psycopg2
 class Store:
 
     @staticmethod
+    def find_store_id(store_name):
+        conn = psycopg2.connect(dbname="shopping", user="lolo", password="cestmoi", host="localhost")
+        cur = conn.cursor()
+        cur.execute("SELECT store_id FROM store WHERE store_name = %s", (store_name, ))
+        result = cur.fetchone()
+        return result
+
+    @staticmethod
     def find_store(store_name):
         conn = psycopg2.connect(dbname='shopping', user='lolo', password='cestmoi', host='localhost')
         cur = conn.cursor()
@@ -21,24 +29,36 @@ class Store:
                 for i in range(1, 6):
                     print(row[i], end=" ")
                 print()
-            choice = input('choisissez un magasin (taper 0 si nouveau) ')
-            if choice != '0':
-                store_attribute = rows[choice]
+            choice = int(input('choisissez un magasin (taper 0 si nouveau) '))
+            if choice != 0:
+                store_attribute = rows[choice-1]
             else:
                 store_attribute = False
         return store_attribute
 
-    def insert_menu(self):
+    @staticmethod
+    def insert(store_attribute):
+        conn = psycopg2.connect(dbname="shopping", user="lolo", host="localhost", password="cestmoi")
+        cur = conn.cursor()
+        sql_insert = """INSERT INTO store(store_name, road_number, road, city, postcode) VALUES (%s, %s, %s, %s, %s)"""
+        cur.execute(sql_insert, store_attribute)
+        conn.commit()
+        cur.close()
+        conn.close()
+
+    def insert_store(self):
         store_name = input('quel est le nom du magasin? ')
-        store_attribute = self.find_store(store_name)
-        if not store_attribute:
+        store_id = self.find_store(store_name)
+        if not store_id:
             print('son adresse')
             road = input('nom de la rue: ')
             road_number = input('numéro de la rue: ')
             city = input('nom de la ville: ')
             postcode = input('code postal: ')
-            store_attribute = store_name, road_number, road, city, postcode
-        return store_attribute
+            store_attribute = (store_name, road_number, road, city, postcode)
+            self.insert(store_attribute)
+            store_id = self.find_store_id(store_attribute[0])
+        return store_id[0]
 
     @staticmethod
     def create():
@@ -56,13 +76,4 @@ class Store:
         conn.commit()
         conn.close()
 
-    def insert(self):
-        conn = psycopg2.connect(dbname="shopping", user="lolo", host="localhost", password="cestmoi")
-        cur = conn.cursor()
-        sql_insert = """INSERT INTO store(store_name, road_number, road, city, postcode) VALUES (%s, %s, %s, %s, %s)"""
-        menu_datas = self.insert_menu()
-        cur.execute(sql_insert, menu_datas)
-        conn.commit()
-        cur.close()
-        conn.close()
-        return menu_datas[0]
+

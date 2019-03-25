@@ -21,6 +21,25 @@ class Product:
         with open('cat.json', 'w') as cat_file:
             json.dump(categories, cat_file, indent=4)
 
+    @staticmethod
+    def insert(result):
+        conn = psycopg2.connect(dbname="shopping", user="lolo", host="localhost", password="cestmoi")
+        cur = conn.cursor()
+        sql_insert = """INSERT INTO product(product_name, product_category, sub_category, processed_food)
+                        VALUES(%s, %s, %s, %s);"""
+        cur.execute(sql_insert, result)
+        conn.commit()
+        cur.close()
+        conn.close()
+        conn = psycopg2.connect(dbname="shopping", user="lolo", password="cestmoi", host="localhost")
+        cur = conn.cursor()
+        cur.execute("SELECT product_id FROM product WHERE product_id = (SELECT max(product_id) FROM product);")
+        product_id = cur.fetchone()
+        conn.commit()
+        cur.close()
+        conn.close()
+        return product_id
+
     def insert_product(self):
         with open('cat.json', 'r') as file:
             categories = json.load(file)
@@ -61,7 +80,10 @@ class Product:
             if new_sub_cat or new_cat:
                 self.add_a_category(categories, sub_cat, category, new_cat)
             result = product_name, category, sub_cat, processed_food
-        return result
+            product_id = self.insert(result)
+        else:
+            product_id = result[0]
+        return product_id
 
     @staticmethod
     def create():
@@ -77,37 +99,3 @@ class Product:
         cur.close()
         conn.commit()
         conn.close()
-
-    def insert(self):
-        conn = psycopg2.connect(dbname="shopping", user="lolo", host="localhost", password="cestmoi")
-        cur = conn.cursor()
-        sql_insert = """INSERT INTO product(product_name, product_category, sub_category, processed_food)
-                        VALUES(%s, %s, %s, %s);"""
-        cur.execute(sql_insert, self.insert_product())
-        conn.commit()
-        cur.close()
-        conn.close()
-
-   #def get_last_product(self):
-   #    product_name = input('entrez le nom du produit: ')
-   #    conn = psycopg2.connect(dbname='shopping', user='lolo', password='cestmoi', host='localhost')
-   #    cur = conn.cursor()
-   #    cur.execute("SELECT product_id FROM product WHERE product.product_name = %s;", (product_name, ))
-   #    result = cur.fetchone()
-   #    conn.commit()
-   #    cur.close()
-   #    conn.close()
-   #    if not result:
-   #        print('nouveau produit !!')
-   #        self.insert(product_name)
-   #        conn = psycopg2.connect(dbname='shopping', user='lolo', password='cestmoi', host='localhost')
-   #        cur = conn.cursor()
-   #        cur.execute("SELECT MAX(product_id) FROM product;")
-   #        result = cur.fetchone()
-   #        product_id = result[0]
-   #        conn.commit()
-   #        cur.close()
-   #        conn.close()
-   #    else:
-   #        product_id = result[0]
-   #    return product_id
