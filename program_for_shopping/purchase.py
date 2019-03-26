@@ -24,7 +24,8 @@ class Purchase:
         conn = psycopg2.connect(dbname="shopping", user="lolo", host="localhost", password="cestmoi")
         cur = conn.cursor()
         sql_create = """CREATE TABLE IF NOT EXISTS purchase (
-                        purchase_id serial PRIMARY KEY, date DATE,
+                        purchase_id serial PRIMARY KEY,
+                        date DATE,
                         purchase_time TIME,
                         total_price DECIMAL(5,2),
                         nb_article INT,

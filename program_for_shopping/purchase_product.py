@@ -5,8 +5,8 @@ class PurchaseProduct:
 
     @staticmethod
     def insert_menu():
-        price = input('entrer le prix du produit: ')
-        weight = input('entrer le poids du produit (taper entrée si null): ')
+        price = float(input('entrer le prix du produit: ').replace(',', '.'))
+        weight = float(input('entrer le poids du produit (taper entrée si null): ').replace(',', '.'))
         return price, weight
 
     @staticmethod

@@ -1,9 +1,8 @@
 need :
-    create function to insert values in purchase_store
-                                     in purchase_product
-                                     in store_product
 
-    to be able write a price with ","
 
-    write some details for the weight: kilos( one or two number ) grams ( 3 number )
+   to ask for product if is food or not ( don't need to ask if processed or not for a product which is not food)
+   must say if some for product price is same that total price ( else say there is a mistake )
+   can enter l ( to see list if user is lost in datas ) display list already recorded and to find missing products
+
 

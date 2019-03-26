@@ -72,7 +72,7 @@ class Product:
                     sub_cat = self.new_sub_cat()
                     new_sub_cat = True
                 else:
-                    sub_cat = categories[category][sub_cat]
+                    sub_cat = categories[category][sub_cat-1]
             processed_food = True
             transform = input('la nourriture est-elle transformée (o/n)?, ')
             if transform == 'n':
