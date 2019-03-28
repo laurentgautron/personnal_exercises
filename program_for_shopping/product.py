@@ -74,12 +74,17 @@ class Product:
                 else:
                     sub_cat = categories[category][sub_cat-1]
             processed_food = True
-            transform = input('la nourriture est-elle transformée (o/n)?, ')
-            if transform == 'n':
-                processed_food = False
+            food = input('est-ce de la nourriture? (o/n)')
+            if food == 'o':
+                food = True
+                transform = input('la nourriture est-elle transformée (o/n)?, ')
+                if transform == 'n':
+                    processed_food = False
+            else:
+                food = False
             if new_sub_cat or new_cat:
                 self.add_a_category(categories, sub_cat, category, new_cat)
-            result = product_name, category, sub_cat, processed_food
+            result = product_name, category, sub_cat,food, processed_food
             product_id = self.insert(result)
         else:
             product_id = result[0]
@@ -94,6 +99,7 @@ class Product:
                         product_name VARCHAR(100),
                         product_category VARCHAR(100),
                         sub_category VARCHAR(100),
+                        food BOOLEAN,
                         processed_food BOOLEAN)"""
         cur.execute(sql_create)
         cur.close()

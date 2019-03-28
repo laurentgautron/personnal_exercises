@@ -6,4 +6,6 @@ need :
    can enter l ( to see list if user is lost in datas ) display list already recorded and to find missing products
    force user to enter number only or string only, or only number displayed ...
 
+if already category and sub category for product, try to fill food variable ( boolean)
+recognize if food or not...
 
