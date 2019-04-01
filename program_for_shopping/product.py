@@ -25,8 +25,8 @@ class Product:
     def insert(result):
         conn = psycopg2.connect(dbname="shopping", user="lolo", host="localhost", password="cestmoi")
         cur = conn.cursor()
-        sql_insert = """INSERT INTO product(product_name, product_category, sub_category, processed_food)
-                        VALUES(%s, %s, %s, %s);"""
+        sql_insert = """INSERT INTO product(product_name, product_category, sub_category, food, processed_food)
+                        VALUES(%s, %s, %s, %s, %s);"""
         cur.execute(sql_insert, result)
         conn.commit()
         cur.close()
@@ -84,7 +84,7 @@ class Product:
                 food = False
             if new_sub_cat or new_cat:
                 self.add_a_category(categories, sub_cat, category, new_cat)
-            result = product_name, category, sub_cat,food, processed_food
+            result = product_name, category, sub_cat, food, processed_food
             product_id = self.insert(result)
         else:
             product_id = result[0]

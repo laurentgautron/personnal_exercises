@@ -1,13 +1,12 @@
 import psycopg2
 from datetime import datetime
-
+from ask import Ask
 
 class Purchase:
 
-    @staticmethod
-    def insert_menu():
-        date_choice = input('garder la date du jour (y/n)? ')
-        if date_choice == 'y':
+    def insert_menu(self):
+        date_choice = Ask.ask_string('garder la date du jour ? ', True)
+        if date_choice == 'o':
             date_achat = (str(datetime.today().strftime('%d/%m/%Y')))
         else:
             date_achat = input('Entrer la date (jj/mm/aaaa) ')

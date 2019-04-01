@@ -1,38 +1,33 @@
 {
     "fruits": [
         "pommes",
-        "poires",
+        "avocats",
+        "tomates",
+        "bananes",
         "oranges",
-        "cerises",
-        "kiwi",
-        "fraises"
+        "kiwis",
+        "concombres"
+    ],
+    "Produits laitiers": [
+        "Fromages"
     ],
     "viandes": [
-        "porc"
+        "volaille"
     ],
-    "hygi\u00e8ne": [
-        "",
-        "lavabo",
-        "poubelle"
+    "ap\u00e9ritifs": [
+        "tuiles"
     ],
-    "c\u00e9r\u00e9ales": [
-        "pain",
-        "riz"
-    ],
-    "produits laitiers": [
-        "fromages"
-    ],
-    "l\u00e9gumes": [
-        "courgettes",
-        "carottes"
-    ],
-    "confisserie": [
+    "confisseries": [
         "chocolat"
     ],
-    "condiments": [
-        "\u00e9pices"
+    "\u00e9picerie": [
+        "moutardes"
     ],
-    "conserverie": [
-        "f\u00e9culents"
+    "charcuterie": [
+        "rillettes"
+    ],
+    "l\u00e9gumes": [
+        "choux",
+        "c\u00e9leris"
     ]
 }
