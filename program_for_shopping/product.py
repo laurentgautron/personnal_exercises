@@ -40,11 +40,10 @@ class Product:
         conn.close()
         return product_id
 
-    def insert_product(self):
+    def insert_product(self, product_name):
         with open('cat.json', 'r') as file:
             categories = json.load(file)
         new_cat = new_sub_cat = False
-        product_name = input('entrez le nom du produit: ')
         conn = psycopg2.connect(dbname='shopping', user='lolo', password='cestmoi', host='localhost')
         cur = conn.cursor()
         cur.execute("SELECT product_id FROM product WHERE product.product_name = %s;", (product_name,))

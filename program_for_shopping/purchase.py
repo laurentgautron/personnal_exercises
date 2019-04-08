@@ -53,7 +53,7 @@ class Purchase:
         conn.commit()
         cur.close()
         conn.close()
-        return last_purchase_id, menu_datas[3]
+        return last_purchase_id, menu_datas[3], menu_datas[0], menu_datas[1]
 
     #@staticmethod
     #def get_last_purchase_and_nbarticles():
