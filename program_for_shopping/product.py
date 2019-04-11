@@ -1,25 +1,16 @@
 import psycopg2
 import json
-
+from store_product import StoreProduct
+from purchase_product import PurchaseProduct
+from new import New
 
 class Product:
 
-    @staticmethod
-    def new_category():
-        return input('écrivez la nouvelle catégorie: ')
+    def __init__(self):
+        self.store_product = StoreProduct
+        self.purchase_product = PurchaseProduct
 
-    @staticmethod
-    def new_sub_cat():
-        return input('entrez la nouvelle sous_catégorie: ')
 
-    @staticmethod
-    def add_a_category(categories, sub_cat, category, new_cat):
-        if new_cat:
-            categories[category] = [sub_cat]
-        else:
-            categories[category].append(sub_cat)
-        with open('cat.json', 'w') as cat_file:
-            json.dump(categories, cat_file, indent=4)
 
     @staticmethod
     def insert(result):
@@ -41,9 +32,6 @@ class Product:
         return product_id
 
     def insert_product(self, product_name):
-        with open('cat.json', 'r') as file:
-            categories = json.load(file)
-        new_cat = new_sub_cat = False
         conn = psycopg2.connect(dbname='shopping', user='lolo', password='cestmoi', host='localhost')
         cur = conn.cursor()
         cur.execute("SELECT product_id FROM product WHERE product.product_name = %s;", (product_name,))
@@ -52,42 +40,27 @@ class Product:
         cur.close()
         conn.close()
         if not result:
-            print('nouveau produit !!')
-            list_cat = []
-            for indice, cat in enumerate(categories):
-                list_cat.append(cat)
-                print(indice + 1, '-', cat)
-            category = int(input('choisissez une catégorie (entrer 0 si nouvelle catégorie): '))
-            if category == 0:
-                category = self.new_category()
-                sub_cat = self.new_sub_cat()
-                new_cat = True
-            else:
-                category = list_cat[category - 1]
-                for indice, sub in enumerate(categories[category]):
-                    print(indice + 1, '-', sub)
-                sub_cat = int(input('choisissez une sous-catégorie (entrer 0 si nouvelle): '))
-                if sub_cat == 0:
-                    sub_cat = self.new_sub_cat()
-                    new_sub_cat = True
-                else:
-                    sub_cat = categories[category][sub_cat-1]
-            processed_food = True
-            food = input('est-ce de la nourriture? (o/n)')
-            if food == 'o':
-                food = True
-                transform = input('la nourriture est-elle transformée (o/n)?, ')
-                if transform == 'n':
-                    processed_food = False
-            else:
-                food = False
-            if new_sub_cat or new_cat:
-                self.add_a_category(categories, sub_cat, category, new_cat)
-            result = product_name, category, sub_cat, food, processed_food
+            result = product_name, New.new_product()
             product_id = self.insert(result)
         else:
             product_id = result[0]
         return product_id
+
+    def record_product(self, last_purchase, nb_articles, store, day, hour, last_article=0):
+        for article in range(last_article, nb_articles):
+            print('enregistrer l\'article n° ', article + 1)
+            product_name = input('entrez le nom du produit: (taper e à la place du nom pour quitter en cours)')
+            if product_name != 'e':
+                product = self.insert_product(product_name)
+                self.store_product.insert(store, product)
+                self.purchase_product.insert(last_purchase, product)
+            else:
+                print("à plus tard")
+                list_record = {"purchase": last_purchase, "product": product_name, "store": store, "article": article,
+                               "nb_articles": nb_articles, "day": day, "hour": hour}
+                with open('list_record.json', 'w') as file:
+                    json.dump(list_record, file, indent=4)
+                break
 
     @staticmethod
     def create():

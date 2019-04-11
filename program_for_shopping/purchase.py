@@ -1,8 +1,20 @@
+import os
 import psycopg2
 from datetime import datetime
 from ask import Ask
+from store import Store
+from pruchase_store import PurchaseStore
+from product import Product
+from last import Last
+
 
 class Purchase:
+
+    def __init__(self):
+        self.store = Store()
+        self.purchase_store = PurchaseStore()
+        self.product = Product()
+        self.purchase = Purchase()
 
     def insert_menu(self):
         date_choice = Ask.ask_string('garder la date du jour ? ', True)
@@ -55,7 +67,16 @@ class Purchase:
         conn.close()
         return last_purchase_id, menu_datas[3], menu_datas[0], menu_datas[1]
 
-    #@staticmethod
-    #def get_last_purchase_and_nbarticles():
-    #
-    #    return last_purchase_id, nbarticles
+    def record_purchase(self):
+        purch = 'o'
+        while purch == 'o':
+            if os.path.isfile('list_record.json'):
+                last_purchase, nb_articles, last_article, store = Last.display_last_datas()
+            else:
+                last_purchase, nb_articles, day, hour = self.purchase.insert()
+                store = self.store.insert_store()
+                self.purchase_store.insert(last_purchase, store)
+            self.product.record_product(last_purchase, nb_articles, day, hour)
+            purch = input('enregistrer un autre achat (o/n)? ')
+
+
