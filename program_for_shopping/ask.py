@@ -5,17 +5,14 @@ class Ask:
 
     def ask_liste(self, question, liste):
         no_choosed = True
-        choice = input(question)
+        choice = ''
         while no_choosed:
             choice = input(question)
             display(liste)
             try:
                 int(choice)
             except ValueError:
-                new_item = self.ask_string('vous voulez rajouter ' + choice + 'dans la liste? ', yn=True)
-                if new_item:
-                    no_choosed = False
-                    # new in list(choice)
+                print('vous devez rentrer un chiffre de la liste')
             else:
                 while choice not in range(1, len(liste) + 1):
                     os.system('clear')

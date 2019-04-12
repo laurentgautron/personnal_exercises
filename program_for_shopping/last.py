@@ -18,3 +18,4 @@ class Last:
         print("le dernier produit enregistré est:", list_record["last_product"])
         print("du magasin:", list_record["store"])
         print("le %s à %s heure", (list_record['day'], list_record["hour"]))
+        return last_purchase, last_article, store, nb_articles, day, hour

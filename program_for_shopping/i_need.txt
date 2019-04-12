@@ -7,9 +7,5 @@ need :
 if already category and sub category for product, try to fill food variable ( boolean)
 recognize if food or not...
 
-enregistrer les données d'abord dans des fichiers puis enregistrer l'achat et les données dans la base de données
-lorsque l'utilisateur a fini
-(demander si c'est fini)
 
-Sinon, pouvoir quitter en cours et garder les données dans des fichiers: reprendre au dernier article du dernier achat
-lors de la session suivante
+faire la fonction display_liste pour afficher les listes

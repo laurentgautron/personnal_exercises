@@ -71,7 +71,8 @@ class Purchase:
         purch = 'o'
         while purch == 'o':
             if os.path.isfile('list_record.json'):
-                last_purchase, nb_articles, last_article, store = Last.display_last_datas()
+                last_purchase, last_article, store, nb_articles, day, hour = Last.display_last_datas()
+                os.remove('list_record.json')
             else:
                 last_purchase, nb_articles, day, hour = self.purchase.insert()
                 store = self.store.insert_store()

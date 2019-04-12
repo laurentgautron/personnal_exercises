@@ -4,13 +4,12 @@ from store_product import StoreProduct
 from purchase_product import PurchaseProduct
 from new import New
 
+
 class Product:
 
     def __init__(self):
         self.store_product = StoreProduct
         self.purchase_product = PurchaseProduct
-
-
 
     @staticmethod
     def insert(result):
