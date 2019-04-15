@@ -17,7 +17,8 @@ class Shopping:
 
     @staticmethod
     def insert_datas():
-        Purchase.record_purchase()
+        purchase = Purchase()
+        purchase.record_purchase()
 
 
 if __name__ == "__main__":

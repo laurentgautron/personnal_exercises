@@ -12,7 +12,10 @@ class Ask:
             try:
                 int(choice)
             except ValueError:
-                print('vous devez rentrer un chiffre de la liste')
+                new_item = self.ask_string('vous voulez rajouter ' + choice + 'dans la liste? ', yn=True)
+                if new_item:
+                    no_choosed = False
+                    # new in list(choice)
             else:
                 while choice not in range(1, len(liste) + 1):
                     os.system('clear')
@@ -31,9 +34,8 @@ class Ask:
             return choice
 
     @staticmethod
-    def ask_number(question, nbarticle=False, weight=False, price=False, way_number=False):
-        number_entered = False
-        while not number_entered:
+    def ask_number(question, nbarticle=False, weight=False, price=False, way_number=False, day_hour=False, code=False):
+        while True:
             if nbarticle:
                 choice = input(question)
                 try:
@@ -66,3 +68,6 @@ class Ask:
                               la virgule si besoin')
                     else:
                         return float(choice)
+            #elif way_number:
+            #elif day_hour:
+            #elif code:

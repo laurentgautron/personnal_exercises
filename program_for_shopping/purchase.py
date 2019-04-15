@@ -3,7 +3,7 @@ import psycopg2
 from datetime import datetime
 from ask import Ask
 from store import Store
-from pruchase_store import PurchaseStore
+from purchase_store import PurchaseStore
 from product import Product
 from last import Last
 
@@ -14,7 +14,6 @@ class Purchase:
         self.store = Store()
         self.purchase_store = PurchaseStore()
         self.product = Product()
-        self.purchase = Purchase()
 
     def insert_menu(self):
         date_choice = Ask.ask_string('garder la date du jour ? ', True)
@@ -26,7 +25,7 @@ class Purchase:
         heure = input('quelle heure (HHMMSS)? ')
         heure = datetime.strftime(datetime.strptime(heure, '%H%M%S'), '%H:%M:%S')
         prix = float(input('le prix total des courses (dans ce magasin) ? ').replace(',', '.'))
-        articles = int(input('nombre d\'articles achetés? '))
+        articles = Ask.number('nombre d\'articles achetés? ', nbarticles=True)
         carte_code = input('le code de la carte utilisée:')
         return date_achat, heure, prix, articles, carte_code
 
@@ -74,10 +73,8 @@ class Purchase:
                 last_purchase, last_article, store, nb_articles, day, hour = Last.display_last_datas()
                 os.remove('list_record.json')
             else:
-                last_purchase, nb_articles, day, hour = self.purchase.insert()
+                last_purchase, nb_articles, day, hour = self.insert()
                 store = self.store.insert_store()
                 self.purchase_store.insert(last_purchase, store)
             self.product.record_product(last_purchase, nb_articles, day, hour)
             purch = input('enregistrer un autre achat (o/n)? ')
-
-

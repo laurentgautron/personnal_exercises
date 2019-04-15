@@ -9,3 +9,9 @@ recognize if food or not...
 
 
 faire la fonction display_liste pour afficher les listes
+
+la function qui rejoute une sous_catégorie pour les questions dans ask:
+si nouvelle catégorie alors nouvelle sou_cat"gorie, mais il peut y avoir nouvelle sous_catégories sans nouvelle catégorie
+donc programmer la fonction ask_liste pour ce cas...le new_in_list
+
+remplacer les input par les ask
