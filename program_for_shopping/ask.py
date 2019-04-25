@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 
 
 class Ask:
@@ -19,7 +20,8 @@ class Ask:
             else:
                 while choice not in range(1, len(liste) + 1):
                     os.system('clear')
-                    choice = input('rentrer un nombre parmi la liste qui s\'affiche ou 0 pour enregistrer un nouvel élément')
+                    choice = input('rentrer un nombre parmi la liste qui s\'affiche ou 0 pour enregistrer \
+                     un nouvel élément')
         return choice
 
     @staticmethod
@@ -34,14 +36,14 @@ class Ask:
             return choice
 
     @staticmethod
-    def ask_number(question, nbarticle=False, weight=False, price=False, way_number=False, day_hour=False, code=False):
+    def ask_number(question, nbarticle=False, weight=False, price=False, way_number=False, day=False, hour=False, code=False):
         while True:
-            if nbarticle:
+            if nbarticle or way_number:
                 choice = input(question)
                 try:
                     int(choice)
                 except ValueError:
-                    print("entrer un nombre entier pour le nombre d'articles ")
+                    print("entrer un nombre entier pour le nombre d'articles")
                 else:
                     return int(choice)
             elif weight:
@@ -68,6 +70,26 @@ class Ask:
                               la virgule si besoin')
                     else:
                         return float(choice)
-            #elif way_number:
-            #elif day_hour:
-            #elif code:
+            elif hour:
+                choice = input(question)
+                try:
+
+            elif day:
+                choice = input(question)
+                try:
+                    choice = datetime.strptime(choice, '%d-%m-%Y')
+                except ValueError:
+                    print('la date que vous avez rentrée n\'est pas une date correcte !')
+                else:
+                    return choice
+            elif code:
+                choice = input(question)
+                try:
+                    int(choice)
+                except ValueError:
+                    print('vous devez entrer un entier de 4 chiffres (les 4 derniers chiffres de la carte utilisée')
+                else:
+                    if len(choice) > 4:
+                        print(' seulement 4 chiffres (les derniers chiffres de la carte utilisée) ')
+                    else:
+                        return int(choice)
