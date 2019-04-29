@@ -1,3 +1,4 @@
+import json
 from ask import Ask
 
 
@@ -8,7 +9,6 @@ class Last:
         with open('list_record.json', 'r') as file:
             list_record = json.load(file)
         last_purchase = list_record["purchase"]
-        product_name = list_record["product"]
         last_article = list_record["article"]
         store = list_record["store"]
         nb_articles = list_record["nb_articles"]

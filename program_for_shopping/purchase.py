@@ -1,3 +1,4 @@
+import json
 import os
 import psycopg2
 from datetime import datetime
@@ -17,15 +18,14 @@ class Purchase:
 
     @staticmethod
     def insert_menu():
-        date_choice = Ask.ask_string('garder la date du jour ? ', True)
+        date_choice = Ask.ask_string('garder la date du jour ? ', yn=True)
         if date_choice == 'o':
             date_purchase = (datetime.today().strftime('%d/%m/%Y'))
         else:
             date_purchase = Ask.ask_number('Entrer la date (jj/mm/aaaa) ', day=True)
-        heure = Ask.ask_number('quelle heure (HHMMSS)? ')
-        # heure = datetime.strftime(datetime.strptime(heure, '%H%M%S'), '%H:%M:%S')
+        heure = Ask.ask_number('quelle heure (HHMMSS)? ', hour=True)
         prix = Ask.ask_number('le prix total des courses (dans ce magasin) ? ', price=True)
-        articles = Ask.ask_number('nombre d\'articles achetés? ', nbarticles=True)
+        articles = Ask.ask_number('nombre d\'articles achetés? ', nbarticle=True)
         carte_code = Ask.ask_number('le code de la carte utilisée:', code=True)
         return date_purchase, heure, prix, articles, carte_code
 
@@ -52,15 +52,16 @@ class Purchase:
         sql = """INSERT INTO purchase (date, purchase_time, total_price, nb_article, carte_code) 
                  VALUES (%s, %s, %s, %s, %s);"""
         menu_datas = Purchase.insert_menu()
+        print(menu_datas)
         cur.execute(sql, menu_datas)
         conn.commit()
         cur.close()
         conn.close()
         conn = psycopg2.connect(dbname='shopping', user='lolo', password='cestmoi', host='localhost')
         cur = conn.cursor()
-        sql = """SELECT purchase_id FROM purchase
+        sql_max_id = """SELECT purchase_id FROM purchase
                WHERE purchase_id = (SELECT MAX(purchase_id) FROM purchase) """
-        cur.execute(sql)
+        cur.execute(sql_max_id)
         last_purchase_id = cur.fetchone()
         conn.commit()
         cur.close()
@@ -77,5 +78,6 @@ class Purchase:
                 last_purchase, nb_articles, day, hour = Purchase.insert()
                 store = self.store.insert_store()
                 self.purchase_store.insert(last_purchase, store)
-            self.product.record_product(last_purchase, nb_articles, day, hour)
+            print(last_purchase, nb_articles, store, day, hour)
+            self.product.record_product(last_purchase, nb_articles, store, day, hour)
             purch = Ask.ask_string('enregistrer un autre achat (o/n)? ', yn=True)

@@ -55,6 +55,7 @@ class Product:
                 self.purchase_product.insert(last_purchase, product)
             else:
                 print("à plus tard")
+                print(type(hour))
                 list_record = {"purchase": last_purchase, "product": product_name, "store": store, "article": article,
                                "nb_articles": nb_articles, "day": day, "hour": hour}
                 with open('list_record.json', 'w') as file:

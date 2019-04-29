@@ -1,5 +1,5 @@
 import os
-from datetime import datetime
+from datetime import datetime, date
 
 
 class Ask:
@@ -30,7 +30,7 @@ class Ask:
             choice = 'a'
             while choice not in ('o', 'n'):
                 choice = input(question + ' répondez oui(o) ou non(n) ')
-            return True
+            return choice
         else:
             choice = input(question)
             return choice
@@ -43,7 +43,7 @@ class Ask:
                 try:
                     int(choice)
                 except ValueError:
-                    print("entrer un nombre entier pour le nombre d'articles")
+                    print("entrer un nombre entier ")
                 else:
                     return int(choice)
             elif weight:
@@ -64,24 +64,34 @@ class Ask:
                 except ValueError:
                     print('vous devez rentrer un prix pour cet achat')
                 else:
-                    choice = str(float(choice)*10)
-                    if len(choice) > 3:
-                        print('seulement trois chiffres avant une éventuelle virgule et deux chiffres autorisés après\
-                              la virgule si besoin')
+                    c = float(choice) - int(float(choice))
+                    print(c)
+                    print(c*100 < 1)
+                    if (not c*100 < 1) or len(str(int(float(choice)))) > 3:
+                        print("""seulement trois chiffres avant une éventuelle virgule et deux chiffres autorisés après
+                              la virgule si besoin""")
                     else:
                         return float(choice)
             elif hour:
                 choice = input(question)
                 try:
-
+                    choice = datetime.strptime(choice, '%H%M%S')
+                except ValueError:
+                    print('ce n\'es pas un bon type d\'heure')
+                else:
+                    return choice.time()
             elif day:
                 choice = input(question)
-                try:
-                    choice = datetime.strptime(choice, '%d-%m-%Y')
-                except ValueError:
-                    print('la date que vous avez rentrée n\'est pas une date correcte !')
+                if len(choice) < 9:
+                    try:
+                        choice = int(choice)
+                    except ValueError:
+                        print('la date que vous avez rentrée n\'est pas une date correcte !')
+                    else:
+                        print(choice)
+                        return choice
                 else:
-                    return choice
+                    print('il faut rentrer une série de 8 chiffres: (JJMMAAAA)')
             elif code:
                 choice = input(question)
                 try:
