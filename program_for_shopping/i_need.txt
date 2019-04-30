@@ -14,9 +14,7 @@ la function qui rejoute une sous_catégorie pour les questions dans ask:
 si nouvelle catégorie alors nouvelle sou_cat"gorie, mais il peut y avoir nouvelle sous_catégories sans nouvelle catégorie
 donc programmer la fonction ask_liste pour ce cas...le new_in_list
 
-remplacer les input par les ask
+remplacer  tous (presque) les input par les ask
 
-le poids doit avoir deux chiffres avant la virgule
-le json n'est pas rempli a vec l'heure: problème de frmat de l'heure ...
+le json n'est pas rempli avec l'heure: problème de frmat de l'heure ...
 
-et le prix de l'achat : verifier que seulement deux chiffres après la virgule...

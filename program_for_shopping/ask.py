@@ -1,5 +1,6 @@
 import os
-from datetime import datetime, date
+from datetime import datetime
+from check import Check
 
 
 class Ask:
@@ -36,18 +37,13 @@ class Ask:
             return choice
 
     @staticmethod
-    def ask_number(question, nbarticle=False, weight=False, price=False, way_number=False, day=False, hour=False, code=False):
+    def ask_number(question, nb_article=False, weight=False, price=False, day=False, hour=False, code=False):
         while True:
-            if nbarticle or way_number:
-                choice = input(question)
-                try:
-                    int(choice)
-                except ValueError:
-                    print("entrer un nombre entier ")
-                else:
-                    return int(choice)
+            choice = input(question)
+            os.system('clear')
+            if nb_article and Check.nb_article(choice):
+                return int(choice)
             elif weight:
-                choice = input(question)
                 try:
                     float(choice)
                 except ValueError:
@@ -58,22 +54,19 @@ class Ask:
                     else:
                         print('seulement 3 chiffres après la virgule')
             elif price:
-                choice = input(question)
                 try:
                     float(choice)
                 except ValueError:
                     print('vous devez rentrer un prix pour cet achat')
                 else:
-                    c = float(choice) - int(float(choice))
-                    print(c)
-                    print(c*100 < 1)
-                    if (not c*100 < 1) or len(str(int(float(choice)))) > 3:
+                    print(float(choice)*100)
+                    print((float(choice)*100).is_integer())
+                    if (not(float(choice)*100).is_integer()) or len(str(int(float(choice)))) > 3:
                         print("""seulement trois chiffres avant une éventuelle virgule et deux chiffres autorisés après
                               la virgule si besoin""")
                     else:
                         return float(choice)
             elif hour:
-                choice = input(question)
                 try:
                     choice = datetime.strptime(choice, '%H%M%S')
                 except ValueError:
@@ -81,7 +74,6 @@ class Ask:
                 else:
                     return choice.time()
             elif day:
-                choice = input(question)
                 if len(choice) < 9:
                     try:
                         choice = int(choice)
@@ -93,7 +85,6 @@ class Ask:
                 else:
                     print('il faut rentrer une série de 8 chiffres: (JJMMAAAA)')
             elif code:
-                choice = input(question)
                 try:
                     int(choice)
                 except ValueError:
