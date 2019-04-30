@@ -59,8 +59,6 @@ class Ask:
                 except ValueError:
                     print('vous devez rentrer un prix pour cet achat')
                 else:
-                    print(float(choice)*100)
-                    print((float(choice)*100).is_integer())
                     if (not(float(choice)*100).is_integer()) or len(str(int(float(choice)))) > 3:
                         print("""seulement trois chiffres avant une éventuelle virgule et deux chiffres autorisés après
                               la virgule si besoin""")
