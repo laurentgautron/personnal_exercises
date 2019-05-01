@@ -25,7 +25,7 @@ class Purchase:
             date_purchase = Ask.ask_number('Entrer la date (jj/mm/aaaa) ', day=True)
         heure = Ask.ask_number('quelle heure (HHMMSS)? ', hour=True)
         prix = Ask.ask_number('le prix total des courses (dans ce magasin) ? ', price=True)
-        articles = Ask.ask_number('nombre d\'articles achetés? ', nbarticle=True)
+        articles = Ask.ask_number('nombre d\'articles achetés? ', nb_article=True)
         carte_code = Ask.ask_number('le code de la carte utilisée:', code=True)
         return date_purchase, heure, prix, articles, carte_code
 

@@ -48,14 +48,14 @@ class Product:
     def record_product(self, last_purchase, nb_articles, store, day, hour, last_article=0):
         for article in range(last_article, nb_articles):
             print('enregistrer l\'article n° ', article + 1)
-            product_name = input('entrez le nom du produit: (taper e à la place du nom pour quitter en cours)')
-            if product_name != 'e':
+            product_name = input('entrez le nom du produit: (taper exit à la place du nom pour quitter en cours) ')
+            if product_name != 'exit':
                 product = self.insert_product(product_name)
                 self.store_product.insert(store, product)
                 self.purchase_product.insert(last_purchase, product)
             else:
                 print("à plus tard")
-                print(type(hour))
+                hour = hour.strftime('%H%M%S')
                 list_record = {"purchase": last_purchase, "product": product_name, "store": store, "article": article,
                                "nb_articles": nb_articles, "day": day, "hour": hour}
                 with open('list_record.json', 'w') as file:

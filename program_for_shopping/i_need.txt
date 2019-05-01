@@ -16,5 +16,4 @@ donc programmer la fonction ask_liste pour ce cas...le new_in_list
 
 remplacer  tous (presque) les input par les ask
 
-le json n'est pas rempli avec l'heure: problème de frmat de l'heure ...
-
+tester la date un peu plus convertir au format date det tester
