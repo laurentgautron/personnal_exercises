@@ -20,7 +20,8 @@ class New:
         with open('cat.json', 'w') as cat_file:
             json.dump(categories, cat_file, indent=4)
 
-    def new_product(self):
+    @staticmethod
+    def new_product():
         with open('cat.json', 'r') as file:
             categories = json.load(file)
         new_cat = new_sub_cat = False
@@ -31,8 +32,8 @@ class New:
             print(indice + 1, '-', cat)
         category = int(input('choisissez une catégorie (entrer 0 si nouvelle catégorie): '))
         if category == 0:
-            category = self.new_category()
-            sub_cat = self.new_sub_cat()
+            category = New.new_category()
+            sub_cat = New.new_sub_cat()
             new_cat = True
         else:
             category = list_cat[category - 1]
@@ -40,7 +41,7 @@ class New:
                 print(indice + 1, '-', sub)
             sub_cat = int(input('choisissez une sous-catégorie (entrer 0 si nouvelle): '))
             if sub_cat == 0:
-                sub_cat = self.new_sub_cat()
+                sub_cat = New.new_sub_cat()
                 new_sub_cat = True
             else:
                 sub_cat = categories[category][sub_cat - 1]
@@ -54,5 +55,5 @@ class New:
         else:
             food = False
         if new_sub_cat or new_cat:
-            self.add_a_category(categories, sub_cat, category, new_cat)
+            New.add_a_category(categories, sub_cat, category, new_cat)
         return category, sub_cat, food, processed_food

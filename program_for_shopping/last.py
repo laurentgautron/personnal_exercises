@@ -1,5 +1,4 @@
 import json
-from ask import Ask
 
 
 class Last:
@@ -14,8 +13,13 @@ class Last:
         nb_articles = list_record["nb_articles"]
         day = list_record["day"]
         hour = list_record["hour"]
+        product = list_record['product']
         print("vous avez un enregistrement d'achat en cours!")
-        print("le dernier produit enregistré est:", list_record["last_product"])
-        print("du magasin:", list_record["store"])
-        print("le %s à %s heure", (list_record['day'], list_record["hour"]))
+        if product == 'exit':
+            print("vous n'avez pas enregistré de produits pour l'instant")
+        else:
+            print("vous avez enregistyré %s produits, le dernier produits enregistré est %s", (nb_articles, product))
+        print("du magasin:", store)
+        print("le %s à %s heure" % (day, hour))
+        print(list_record)
         return last_purchase, last_article, store, nb_articles, day, hour

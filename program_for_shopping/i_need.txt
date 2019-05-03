@@ -17,3 +17,6 @@ donc programmer la fonction ask_liste pour ce cas...le new_in_list
 remplacer  tous (presque) les input par les ask
 
 tester la date un peu plus convertir au format date det tester
+problème pour dernier enregistrement: recupérer le dernier produit enregistrer
+
+Commenter mon programme...

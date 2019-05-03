@@ -70,7 +70,7 @@ class Ask:
                 except ValueError:
                     print('ce n\'es pas un bon type d\'heure')
                 else:
-                    return choice.time()
+                    return choice.time().strftime('%H:%M:%S')
             elif day:
                 if len(choice) < 9:
                     try:

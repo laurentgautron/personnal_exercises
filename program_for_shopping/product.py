@@ -8,8 +8,8 @@ from new import New
 class Product:
 
     def __init__(self):
-        self.store_product = StoreProduct
-        self.purchase_product = PurchaseProduct
+        self.store_product = StoreProduct()
+        self.purchase_product = PurchaseProduct()
 
     @staticmethod
     def insert(result):
@@ -28,7 +28,7 @@ class Product:
         conn.commit()
         cur.close()
         conn.close()
-        return product_id
+        return product_id[0]
 
     def insert_product(self, product_name):
         conn = psycopg2.connect(dbname='shopping', user='lolo', password='cestmoi', host='localhost')
@@ -39,7 +39,9 @@ class Product:
         cur.close()
         conn.close()
         if not result:
-            result = product_name, New.new_product()
+            data_list = New.new_product()
+            result = product_name, data_list[0], data_list[1], data_list[2], data_list[3]
+            print(result)
             product_id = self.insert(result)
         else:
             product_id = result[0]
@@ -51,13 +53,14 @@ class Product:
             product_name = input('entrez le nom du produit: (taper exit à la place du nom pour quitter en cours) ')
             if product_name != 'exit':
                 product = self.insert_product(product_name)
+                print(type(product))
+                print('les produtis et stores', product, store)
                 self.store_product.insert(store, product)
                 self.purchase_product.insert(last_purchase, product)
             else:
                 print("à plus tard")
-                hour = hour.strftime('%H%M%S')
-                list_record = {"purchase": last_purchase, "product": product_name, "store": store, "article": article,
-                               "nb_articles": nb_articles, "day": day, "hour": hour}
+                list_record = {"purchase": last_purchase, "product": product_name, "store": store,
+                               "article": article + 1, "nb_articles": nb_articles, "day": day, "hour": hour}
                 with open('list_record.json', 'w') as file:
                     json.dump(list_record, file, indent=4)
                 break

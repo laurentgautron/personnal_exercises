@@ -18,10 +18,13 @@
         "tuiles"
     ],
     "confisseries": [
-        "chocolat"
+        "chocolat",
+        "kr\u00e9ma"
     ],
     "\u00e9picerie": [
-        "moutardes"
+        "moutardes",
+        "ail",
+        "oigon"
     ],
     "charcuterie": [
         "rillettes"
@@ -29,5 +32,11 @@
     "l\u00e9gumes": [
         "choux",
         "c\u00e9leris"
+    ],
+    "f\u00e9culents": [
+        "p\u00e2tes"
+    ],
+    "entretient": [
+        "maison"
     ]
 }

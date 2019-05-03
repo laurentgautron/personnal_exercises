@@ -17,7 +17,8 @@ class Purchase:
         self.product = Product()
 
     @staticmethod
-    def insert_menu():
+    def menu():
+        os.system('clear')
         date_choice = Ask.ask_string('garder la date du jour ? ', yn=True)
         if date_choice == 'o':
             date_purchase = (datetime.today().strftime('%d/%m/%Y'))
@@ -51,7 +52,7 @@ class Purchase:
         cur = conn.cursor()
         sql = """INSERT INTO purchase (date, purchase_time, total_price, nb_article, carte_code) 
                  VALUES (%s, %s, %s, %s, %s);"""
-        menu_datas = Purchase.insert_menu()
+        menu_datas = Purchase.menu()
         print(menu_datas)
         cur.execute(sql, menu_datas)
         conn.commit()
@@ -66,7 +67,8 @@ class Purchase:
         conn.commit()
         cur.close()
         conn.close()
-        return last_purchase_id, menu_datas[3], menu_datas[0], menu_datas[1]
+        print("le type du pruchase_id est: ", type(last_purchase_id[0]))
+        return last_purchase_id[0], menu_datas[3], menu_datas[0], menu_datas[1]
 
     def record_purchase(self):
         purch = 'o'
