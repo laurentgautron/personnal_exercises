@@ -15,11 +15,12 @@ class Last:
         hour = list_record["hour"]
         product = list_record['product']
         print("vous avez un enregistrement d'achat en cours!")
-        if product == 'exit':
-            print("vous n'avez pas enregistré de produits pour l'instant")
-        else:
-            print("vous avez enregistyré %s produits, le dernier produits enregistré est %s", (nb_articles, product))
         print("du magasin:", store)
         print("le %s à %s heure" % (day, hour))
+        if last_article == 0:
+            print("vous n'avez pas enregistré de produits pour l'instant")
+        else:
+            print("vous avez enregistyré %s produits, le dernier produits enregistré est %s" % (nb_articles, product))
+
         print(list_record)
         return last_purchase, last_article, store, nb_articles, day, hour

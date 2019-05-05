@@ -24,11 +24,14 @@ class StoreProduct:
         cur = conn.cursor()
         cur.execute("""SELECT count(store_id) FROM store_product
                        WHERE product_id = %s AND store_id = %s""", (product, store))
-        result = cur.fetchall()
-        if not result:
+        result = cur.fetchone()
+        if result[0] == 0:
             return False
+        else:
+            return True
 
     def insert(self, store, product):
+        print(self.find_product_in_store(store, product))
         if not self.find_product_in_store(store, product):
             conn = psycopg2.connect(dbname="shopping", user="lolo", password="cestmoi", host="localhost")
             cur = conn.cursor()

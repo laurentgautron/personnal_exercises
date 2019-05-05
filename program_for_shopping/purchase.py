@@ -26,7 +26,7 @@ class Purchase:
             date_purchase = Ask.ask_number('Entrer la date (jj/mm/aaaa) ', day=True)
         heure = Ask.ask_number('quelle heure (HHMMSS)? ', hour=True)
         prix = Ask.ask_number('le prix total des courses (dans ce magasin) ? ', price=True)
-        articles = Ask.ask_number('nombre d\'articles achetés? ', nb_article=True)
+        articles = Ask.ask_number('nombre d\'articles achetés? ', nb=True)
         carte_code = Ask.ask_number('le code de la carte utilisée:', code=True)
         return date_purchase, heure, prix, articles, carte_code
 
@@ -75,11 +75,16 @@ class Purchase:
         while purch == 'o':
             if os.path.isfile('list_record.json'):
                 last_purchase, last_article, store, nb_articles, day, hour = Last.display_last_datas()
+                print('le dernier article:', last_article)
+                remaining = nb_articles - last_article
+                accord = "article" if remaining < 2 else "articles"
+                print("il reste %s %s à rentrer" % (remaining, accord))
                 os.remove('list_record.json')
             else:
+                last_article = 0
                 last_purchase, nb_articles, day, hour = Purchase.insert()
                 store = self.store.insert_store()
                 self.purchase_store.insert(last_purchase, store)
-            print(last_purchase, nb_articles, store, day, hour)
-            self.product.record_product(last_purchase, nb_articles, store, day, hour)
+            print(last_purchase, nb_articles, store, day, hour, last_article)
+            self.product.record_product(last_purchase, nb_articles, store, day, hour, last_article)
             purch = Ask.ask_string('enregistrer un autre achat (o/n)? ', yn=True)

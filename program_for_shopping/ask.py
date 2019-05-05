@@ -32,16 +32,13 @@ class Ask:
             while choice not in ('o', 'n'):
                 choice = input(question + ' répondez oui(o) ou non(n) ')
             return choice
-        else:
-            choice = input(question)
-            return choice
 
     @staticmethod
-    def ask_number(question, nb_article=False, weight=False, price=False, day=False, hour=False, code=False):
+    def ask_number(question, nb=False, weight=False, price=False, day=False, hour=False, code=False):
         while True:
             choice = input(question)
             os.system('clear')
-            if nb_article and Check.nb_article(choice):
+            if nb and Check.nb(choice):
                 return int(choice)
             elif weight:
                 try:
@@ -60,8 +57,8 @@ class Ask:
                     print('vous devez rentrer un prix pour cet achat')
                 else:
                     if (not(float(choice)*100).is_integer()) or len(str(int(float(choice)))) > 3:
-                        print("""seulement trois chiffres avant une éventuelle virgule et deux chiffres autorisés après
-                              la virgule si besoin""")
+                        print("seulement trois chiffres avant une éventuelle virgule, "
+                              "et deux chiffres autorisés après la virgule si besoin")
                     else:
                         return float(choice)
             elif hour:

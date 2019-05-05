@@ -1,5 +1,5 @@
 import json
-
+from ask import Ask
 
 class New:
 
@@ -30,7 +30,7 @@ class New:
         for indice, cat in enumerate(categories):
             list_cat.append(cat)
             print(indice + 1, '-', cat)
-        category = int(input('choisissez une catégorie (entrer 0 si nouvelle catégorie): '))
+        category = Ask.ask_number('choisissez une catégorie (entrer 0 si nouvelle catégorie): ', nb=True)
         if category == 0:
             category = New.new_category()
             sub_cat = New.new_sub_cat()
@@ -39,17 +39,17 @@ class New:
             category = list_cat[category - 1]
             for indice, sub in enumerate(categories[category]):
                 print(indice + 1, '-', sub)
-            sub_cat = int(input('choisissez une sous-catégorie (entrer 0 si nouvelle): '))
+            sub_cat = Ask.ask_number('choisissez une sous-catégorie (entrer 0 si nouvelle): ', nb=True)
             if sub_cat == 0:
                 sub_cat = New.new_sub_cat()
                 new_sub_cat = True
             else:
                 sub_cat = categories[category][sub_cat - 1]
         processed_food = True
-        food = input('est-ce de la nourriture? (o/n)')
+        food = Ask.ask_string('est-ce de la nourriture(o,n)? ', yn=True)
         if food == 'o':
             food = True
-            transform = input('la nourriture est-elle transformée (o/n)?, ')
+            transform = Ask.ask_string('la nourriture est-elle transformée (o/n)? ', yn=True)
             if transform == 'n':
                 processed_food = False
         else:

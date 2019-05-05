@@ -20,3 +20,10 @@ tester la date un peu plus convertir au format date det tester
 problème pour dernier enregistrement: recupérer le dernier produit enregistrer
 
 Commenter mon programme...
+
+une classe list pour des méthodes de liste : afficher, remplir
+
+déterminer pour un produit déjà existant ( dans product ) que c'est de la nourriture ( automitiquement)
+
+rechercher le nom du magasin (avec le id) lorsqu'on affiche un achat non terminé
+pareil pour le dernier produit enregistré.

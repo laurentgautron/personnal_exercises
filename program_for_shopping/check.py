@@ -1,7 +1,7 @@
 class Check:
 
     @staticmethod
-    def nb_article(choice):
+    def nb(choice):
         try:
             int(choice)
         except ValueError:
