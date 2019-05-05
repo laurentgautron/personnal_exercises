@@ -16,6 +16,10 @@ class Purchase:
         self.purchase_store = PurchaseStore()
         self.product = Product()
 
+    # @staticmethod
+    # def find_last_purchase():
+    #     return last_purchase
+
     @staticmethod
     def menu():
         os.system('clear')
