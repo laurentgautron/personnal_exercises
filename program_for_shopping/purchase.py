@@ -16,9 +16,17 @@ class Purchase:
         self.purchase_store = PurchaseStore()
         self.product = Product()
 
-    # @staticmethod
-    # def find_last_purchase():
-    #     return last_purchase
+    @staticmethod
+    def find_last_purchase():
+        conn = psycopg2.connect(dbname="shopping", user="lolo", password="cestmoi", host="localhost")
+        cur = conn.cursor()
+        sql = """SELECT purchase_id FROM purchase WHERE purchase_id = (SELECT MAX(purchase_id) FROM purchase)"""
+        cur.execute(sql)
+        last_purchase = cur.fetchone()
+        conn.commit()
+        cur.close()
+        conn.close()
+        return last_purchase
 
     @staticmethod
     def menu():
@@ -78,8 +86,8 @@ class Purchase:
         purch = 'o'
         while purch == 'o':
             if os.path.isfile('list_record.json'):
-                last_purchase, last_article, store, nb_articles, day, hour = Last.display_last_datas()
-                print('le dernier article:', last_article)
+                product, last_purchase, last_article, store, nb_articles, day, hour = Last.display_last_datas()
+                print('le dernier article:', product)
                 remaining = nb_articles - last_article
                 accord = "article" if remaining < 2 else "articles"
                 print("il reste %s %s à rentrer" % (remaining, accord))

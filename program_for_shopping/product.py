@@ -3,8 +3,6 @@ import json
 from store_product import StoreProduct
 from purchase_product import PurchaseProduct
 from new import New
-from product import Product
-from purchase import Purchase
 
 
 class Product:
@@ -13,9 +11,19 @@ class Product:
         self.store_product = StoreProduct()
         self.purchase_product = PurchaseProduct()
 
-    # @staticmethod
-    # def find_last_product(last_purchase):
-    #     return last_product
+    @staticmethod
+    def find_last_product():
+        conn = psycopg2.connect(dbname="shopping", user='lolo', password='cestmoi', host='localhost')
+        cur = conn.cursor()
+        sql = """ SELECT product_name FROM product
+                  JOIN purchase_product ON purchase_product.id = (SELECT MAX(purchase_product.id) 
+                  FROM purchase_product)"""
+        cur.execute(sql)
+        last_product = cur.fetchone()
+        conn.commit()
+        cur.close()
+        conn.close()
+        return last_product[0]
 
     @staticmethod
     def insert(result):
@@ -64,11 +72,11 @@ class Product:
                 self.purchase_product.insert(last_purchase, product)
             else:
                 print("à plus tard")
-                if last_article == 0:
-                    last_purchase = Purchase.find_last_purchase()
-                    product_name = ''
+                print('le dernier article avant quitter', article)
+                if article == 0:
+                    product_name = 'pas de produit enregistré'
                 else:
-                    product_name = Product.find_last_product(last_purchase)
+                    product_name = Product.find_last_product()
                 list_record = {"purchase": last_purchase, "product": product_name, "store": store,
                                "article": article, "nb_articles": nb_articles, "day": day, "hour": hour}
                 with open('list_record.json', 'w') as file:
