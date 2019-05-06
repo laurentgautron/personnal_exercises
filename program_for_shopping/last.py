@@ -20,7 +20,7 @@ class Last:
         if last_article == 0:
             print("vous n'avez pas enregistré de produits pour l'instant")
         else:
-            print("vous avez enregistyré %s produits, le dernier produits enregistré est %s" % (nb_articles, product))
+            print("vous avez enregistré %s produits, le dernier produits enregistré est %s" % (nb_articles, product))
 
         print(list_record)
-        return last_purchase, last_article, store, nb_articles, day, hour
+        return product, last_purchase, last_article, store, nb_articles, day, hour

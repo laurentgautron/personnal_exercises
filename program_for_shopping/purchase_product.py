@@ -14,15 +14,11 @@ class PurchaseProduct:
         conn = psycopg2.connect(dbname="shopping", user="lolo", host="localhost", password="cestmoi")
         cur = conn.cursor()
         sql_create = """CREATE TABLE IF NOT EXISTS purchase_product (
+                        id SERIAL PRIMARY KEY,
                         purchase_id INTEGER, 
                         product_id INTEGER,
                         price DECIMAL(5,2),
-                        weight DECIMAL(6,3),
-                        PRIMARY KEY (purchase_id, product_id),
-                        CONSTRAINT purchase_product_purchase_id_fkey FOREIGN KEY (purchase_id)
-                        REFERENCES purchase(purchase_id),
-                        CONSTRAINT purchase_product_product_id_fkey FOREIGN KEY (product_id)
-                        REFERENCES product(product_id));"""
+                        weight DECIMAL(6,3));"""
         cur.execute(sql_create)
         cur.close()
         conn.commit()
