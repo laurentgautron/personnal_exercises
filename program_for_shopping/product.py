@@ -2,7 +2,10 @@ import json
 from store_product import StoreProduct
 from purchase_product import PurchaseProduct
 from new import New
+<<<<<<< HEAD
 from connection import Connection
+=======
+>>>>>>> f02410523c77eb5f8b13fbff2209dacc06841ec1
 
 
 class Product:
@@ -13,6 +16,7 @@ class Product:
 
     @staticmethod
     def find_last_product():
+<<<<<<< HEAD
         with Connection.get_instance() as cur:
             sql = """ SELECT product_name FROM product
                       JOIN purchase_product ON product.product_id = purchase_product.product_id
@@ -21,6 +25,18 @@ class Product:
             cur.execute(sql)
             last_product = cur.fetchone()
         print('le last est', last_product[0])
+=======
+        conn = psycopg2.connect(dbname="shopping", user='lolo', password='cestmoi', host='localhost')
+        cur = conn.cursor()
+        sql = """ SELECT product_name FROM product
+                  JOIN purchase_product ON purchase_product.id = (SELECT MAX(purchase_product.id) 
+                  FROM purchase_product)"""
+        cur.execute(sql)
+        last_product = cur.fetchone()
+        conn.commit()
+        cur.close()
+        conn.close()
+>>>>>>> f02410523c77eb5f8b13fbff2209dacc06841ec1
         return last_product[0]
 
     @staticmethod

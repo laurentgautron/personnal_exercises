@@ -11,6 +11,7 @@ class PurchaseProduct:
 
     @staticmethod
     def create():
+<<<<<<< HEAD
         with Connection.get_instance() as cur:
             sql_create = """CREATE TABLE IF NOT EXISTS purchase_product (
                             id SERIAL PRIMARY KEY,
@@ -19,6 +20,20 @@ class PurchaseProduct:
                             price DECIMAL(5,2),
                             weight DECIMAL(6,3));"""
             cur.execute(sql_create)
+=======
+        conn = psycopg2.connect(dbname="shopping", user="lolo", host="localhost", password="cestmoi")
+        cur = conn.cursor()
+        sql_create = """CREATE TABLE IF NOT EXISTS purchase_product (
+                        id SERIAL PRIMARY KEY,
+                        purchase_id INTEGER, 
+                        product_id INTEGER,
+                        price DECIMAL(5,2),
+                        weight DECIMAL(6,3));"""
+        cur.execute(sql_create)
+        cur.close()
+        conn.commit()
+        conn.close()
+>>>>>>> f02410523c77eb5f8b13fbff2209dacc06841ec1
 
     def insert(self, last_purchase, product):
         with Connection.get_instance() as cur:

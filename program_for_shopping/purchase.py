@@ -17,10 +17,21 @@ class Purchase:
 
     @staticmethod
     def find_last_purchase():
+<<<<<<< HEAD
         with Connection.get_instance() as cur:
             sql = """SELECT purchase_id FROM purchase WHERE purchase_id = (SELECT MAX(purchase_id) FROM purchase)"""
             cur.execute(sql)
             last_purchase = cur.fetchone()
+=======
+        conn = psycopg2.connect(dbname="shopping", user="lolo", password="cestmoi", host="localhost")
+        cur = conn.cursor()
+        sql = """SELECT purchase_id FROM purchase WHERE purchase_id = (SELECT MAX(purchase_id) FROM purchase)"""
+        cur.execute(sql)
+        last_purchase = cur.fetchone()
+        conn.commit()
+        cur.close()
+        conn.close()
+>>>>>>> f02410523c77eb5f8b13fbff2209dacc06841ec1
         return last_purchase
 
     @staticmethod
