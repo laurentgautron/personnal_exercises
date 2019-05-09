@@ -1,5 +1,4 @@
 import os
-from datetime import datetime
 from check import Check
 
 
@@ -39,53 +38,20 @@ class Ask:
             choice = input(question)
             os.system('clear')
             if nb and Check.nb(choice):
+                print('bon nombre? ', Check.nb(choice))
                 return int(choice)
-            elif weight:
-                try:
-                    float(choice)
-                except ValueError:
-                    print('vous devez rentrer un nombre pour le poids')
-                else:
-                    if (float(choice)*1000).is_integer():
-                        return float(choice)
-                    else:
-                        print('seulement 3 chiffres après la virgule')
-            elif price:
-                try:
-                    float(choice)
-                except ValueError:
-                    print('vous devez rentrer un prix pour cet achat')
-                else:
-                    if (not(float(choice)*100).is_integer()) or len(str(int(float(choice)))) > 3:
-                        print("seulement trois chiffres avant une éventuelle virgule, "
-                              "et deux chiffres autorisés après la virgule si besoin")
-                    else:
-                        return float(choice)
-            elif hour:
-                try:
-                    choice = datetime.strptime(choice, '%H%M%S')
-                except ValueError:
-                    print('ce n\'es pas un bon type d\'heure')
-                else:
-                    return choice.time().strftime('%H:%M:%S')
-            elif day:
-                if len(choice) < 9:
-                    try:
-                        choice = int(choice)
-                    except ValueError:
-                        print('la date que vous avez rentrée n\'est pas une date correcte !')
-                    else:
-                        print(choice)
-                        return choice
-                else:
-                    print('il faut rentrer une série de 8 chiffres: (JJMMAAAA)')
-            elif code:
-                try:
-                    int(choice)
-                except ValueError:
-                    print('vous devez entrer un entier de 4 chiffres (les 4 derniers chiffres de la carte utilisée')
-                else:
-                    if len(choice) > 4:
-                        print(' seulement 4 chiffres (les derniers chiffres de la carte utilisée) ')
-                    else:
-                        return int(choice)
+            elif weight and Check.weight(choice):
+                print('bon poids? ', Check.weight(choice))
+                return float(choice)
+            elif price and Check.price(choice):
+                print('bon prix? ', Check.price(choice))
+                return float(choice)
+            elif hour and Check.hour(choice):
+                print('bonne heure? ', Check.hour(choice))
+                return choice
+            elif day and Check.day(choice):
+                print('bonne date? ', Check.day(choice))
+                return choice
+            elif code and Check.code(choice):
+                print('bon code? ', Check.code(choice))
+                return int(choice)

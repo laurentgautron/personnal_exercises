@@ -1,25 +1,20 @@
-import psycopg2
+from connection import Connection
 
 
 class Store:
 
     @staticmethod
     def find_store_id(store_name):
-        conn = psycopg2.connect(dbname="shopping", user="lolo", password="cestmoi", host="localhost")
-        cur = conn.cursor()
-        cur.execute("SELECT store_id FROM store WHERE store_name = %s", (store_name, ))
-        result = cur.fetchone()
+        with Connection.get_instance() as cur:
+            cur.execute("SELECT store_id FROM store WHERE store_name = %s", (store_name, ))
+            result = cur.fetchone()
         return result
 
     @staticmethod
     def find_store(store_name):
-        conn = psycopg2.connect(dbname='shopping', user='lolo', password='cestmoi', host='localhost')
-        cur = conn.cursor()
-        cur.execute("SELECT * FROM store WHERE store_name = %s", (store_name, ))
-        rows = cur.fetchall()
-        conn.commit()
-        cur.close()
-        conn.close()
+        with Connection.get_instance() as cur:
+            cur.execute("SELECT * FROM store WHERE store_name = %s", (store_name, ))
+            rows = cur.fetchall()
         store_attribute = False
         if not rows:
             print('nouveau magasin! ')
@@ -38,13 +33,10 @@ class Store:
 
     @staticmethod
     def insert(store_attribute):
-        conn = psycopg2.connect(dbname="shopping", user="lolo", host="localhost", password="cestmoi")
-        cur = conn.cursor()
-        sql_insert = """INSERT INTO store(store_name, road_number, road, city, postcode) VALUES (%s, %s, %s, %s, %s)"""
-        cur.execute(sql_insert, store_attribute)
-        conn.commit()
-        cur.close()
-        conn.close()
+        with Connection.get_instance() as cur:
+            sql_insert = """INSERT INTO store(store_name, road_number, road, city, postcode) 
+                            VALUES (%s, %s, %s, %s, %s)"""
+            cur.execute(sql_insert, store_attribute)
 
     def insert_store(self):
         store_name = input('quel est le nom du magasin? ')
@@ -62,18 +54,12 @@ class Store:
 
     @staticmethod
     def create():
-        conn = psycopg2.connect(dbname="shopping", user="lolo", host="localhost", password="cestmoi")
-        cur = conn.cursor()
-        sql_create = """CREATE TABLE IF NOT EXISTS store (
-                        store_id serial PRIMARY KEY,
-                        store_name VARCHAR(100),
-                        road_number INT,
-                        road VARCHAR(100),
-                        city VARCHAR(100),
-                        postcode INT);"""
-        cur.execute(sql_create)
-        cur.close()
-        conn.commit()
-        conn.close()
-
-
+        with Connection.get_instance() as cur:
+            sql_create = """CREATE TABLE IF NOT EXISTS store (
+                            store_id serial PRIMARY KEY,
+                            store_name VARCHAR(100),
+                            road_number INT,
+                            road VARCHAR(100),
+                            city VARCHAR(100),
+                            postcode INT);"""
+            cur.execute(sql_create)

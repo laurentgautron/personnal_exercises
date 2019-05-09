@@ -1,4 +1,4 @@
-import psycopg2
+from connection import Connection
 
 
 class PurchaseProduct:
@@ -11,25 +11,17 @@ class PurchaseProduct:
 
     @staticmethod
     def create():
-        conn = psycopg2.connect(dbname="shopping", user="lolo", host="localhost", password="cestmoi")
-        cur = conn.cursor()
-        sql_create = """CREATE TABLE IF NOT EXISTS purchase_product (
-                        id SERIAL PRIMARY KEY,
-                        purchase_id INTEGER, 
-                        product_id INTEGER,
-                        price DECIMAL(5,2),
-                        weight DECIMAL(6,3));"""
-        cur.execute(sql_create)
-        cur.close()
-        conn.commit()
-        conn.close()
+        with Connection.get_instance() as cur:
+            sql_create = """CREATE TABLE IF NOT EXISTS purchase_product (
+                            id SERIAL PRIMARY KEY,
+                            purchase_id INTEGER, 
+                            product_id INTEGER,
+                            price DECIMAL(5,2),
+                            weight DECIMAL(6,3));"""
+            cur.execute(sql_create)
 
     def insert(self, last_purchase, product):
-        conn = psycopg2.connect(dbname="shopping", user="lolo", host="localhost", password="cestmoi")
-        cur = conn.cursor()
-        sql_insert = """INSERT INTO purchase_product(purchase_id, product_id, price, weight) VALUES (%s, %s, %s, %s);"""
-        price, weight = self.insert_menu()
-        cur.execute(sql_insert, (last_purchase, product, price, weight))
-        conn.commit()
-        cur.close()
-        conn.close()
+        with Connection.get_instance() as cur:
+            sql_insert = """INSERT INTO purchase_product(purchase_id, product_id, price, weight) VALUES (%s, %s, %s, %s);"""
+            price, weight = self.insert_menu()
+            cur.execute(sql_insert, (last_purchase, product, price, weight))

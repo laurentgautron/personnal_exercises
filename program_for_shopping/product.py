@@ -1,8 +1,8 @@
-import psycopg2
 import json
 from store_product import StoreProduct
 from purchase_product import PurchaseProduct
 from new import New
+from connection import Connection
 
 
 class Product:
@@ -13,45 +13,31 @@ class Product:
 
     @staticmethod
     def find_last_product():
-        conn = psycopg2.connect(dbname="shopping", user='lolo', password='cestmoi', host='localhost')
-        cur = conn.cursor()
-        sql = """ SELECT product_name FROM product
-                  JOIN purchase_product ON purchase_product.id = (SELECT MAX(purchase_product.id) 
-                  FROM purchase_product)"""
-        cur.execute(sql)
-        last_product = cur.fetchone()
-        conn.commit()
-        cur.close()
-        conn.close()
+        with Connection.get_instance() as cur:
+            sql = """ SELECT product_name FROM product
+                      JOIN purchase_product ON product.product_id = purchase_product.product_id
+                      WHERE purchase_product.id = (SELECT MAX(purchase_product.id) 
+                      FROM purchase_product);"""
+            cur.execute(sql)
+            last_product = cur.fetchone()
+        print('le last est', last_product[0])
         return last_product[0]
 
     @staticmethod
     def insert(result):
-        conn = psycopg2.connect(dbname="shopping", user="lolo", host="localhost", password="cestmoi")
-        cur = conn.cursor()
-        sql_insert = """INSERT INTO product(product_name, product_category, sub_category, food, processed_food)
-                        VALUES(%s, %s, %s, %s, %s);"""
-        cur.execute(sql_insert, result)
-        conn.commit()
-        cur.close()
-        conn.close()
-        conn = psycopg2.connect(dbname="shopping", user="lolo", password="cestmoi", host="localhost")
-        cur = conn.cursor()
-        cur.execute("SELECT product_id FROM product WHERE product_id = (SELECT max(product_id) FROM product);")
-        product_id = cur.fetchone()
-        conn.commit()
-        cur.close()
-        conn.close()
+        with Connection.get_instance() as cur:
+            sql_insert = """INSERT INTO product(product_name, product_category, sub_category, food, processed_food)
+                            VALUES(%s, %s, %s, %s, %s);"""
+            cur.execute(sql_insert, result)
+        with Connection.get_instance() as cur:
+            cur.execute("SELECT product_id FROM product WHERE product_id = (SELECT max(product_id) FROM product);")
+            product_id = cur.fetchone()
         return product_id[0]
 
     def insert_product(self, product_name):
-        conn = psycopg2.connect(dbname='shopping', user='lolo', password='cestmoi', host='localhost')
-        cur = conn.cursor()
-        cur.execute("SELECT product_id FROM product WHERE product.product_name = %s;", (product_name,))
-        result = cur.fetchone()
-        conn.commit()
-        cur.close()
-        conn.close()
+        with Connection.get_instance() as cur:
+            cur.execute("SELECT product_id FROM product WHERE product.product_name = %s;", (product_name,))
+            result = cur.fetchone()
         if not result:
             data_list = New.new_product()
             result = product_name, data_list[0], data_list[1], data_list[2], data_list[3]
@@ -85,16 +71,12 @@ class Product:
 
     @staticmethod
     def create():
-        conn = psycopg2.connect(dbname="shopping", user="lolo", host="localhost", password="cestmoi")
-        cur = conn.cursor()
-        sql_create = """CREATE TABLE IF NOT EXISTS product (
-                        product_id serial PRIMARY KEY,
-                        product_name VARCHAR(100),
-                        product_category VARCHAR(100),
-                        sub_category VARCHAR(100),
-                        food BOOLEAN,
-                        processed_food BOOLEAN)"""
-        cur.execute(sql_create)
-        cur.close()
-        conn.commit()
-        conn.close()
+        with Connection.get_instance() as cur:
+            sql_create = """CREATE TABLE IF NOT EXISTS product (
+                            product_id serial PRIMARY KEY,
+                            product_name VARCHAR(100),
+                            product_category VARCHAR(100),
+                            sub_category VARCHAR(100),
+                            food BOOLEAN,
+                            processed_food BOOLEAN)"""
+            cur.execute(sql_create)

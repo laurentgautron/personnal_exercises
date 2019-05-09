@@ -1,12 +1,11 @@
-import json
 import os
-import psycopg2
 from datetime import datetime
 from ask import Ask
 from store import Store
 from purchase_store import PurchaseStore
 from product import Product
 from last import Last
+from connection import Connection
 
 
 class Purchase:
@@ -18,14 +17,10 @@ class Purchase:
 
     @staticmethod
     def find_last_purchase():
-        conn = psycopg2.connect(dbname="shopping", user="lolo", password="cestmoi", host="localhost")
-        cur = conn.cursor()
-        sql = """SELECT purchase_id FROM purchase WHERE purchase_id = (SELECT MAX(purchase_id) FROM purchase)"""
-        cur.execute(sql)
-        last_purchase = cur.fetchone()
-        conn.commit()
-        cur.close()
-        conn.close()
+        with Connection.get_instance() as cur:
+            sql = """SELECT purchase_id FROM purchase WHERE purchase_id = (SELECT MAX(purchase_id) FROM purchase)"""
+            cur.execute(sql)
+            last_purchase = cur.fetchone()
         return last_purchase
 
     @staticmethod
@@ -44,41 +39,29 @@ class Purchase:
 
     @staticmethod
     def create():
-        conn = psycopg2.connect(dbname="shopping", user="lolo", host="localhost", password="cestmoi")
-        cur = conn.cursor()
-        sql_create = """CREATE TABLE IF NOT EXISTS purchase (
-                        purchase_id serial PRIMARY KEY,
-                        date DATE,
-                        purchase_time TIME,
-                        total_price DECIMAL(5,2),
-                        nb_article INT,
-                        carte_code INT)"""
-        cur.execute(sql_create)
-        cur.close()
-        conn.commit()
-        conn.close()
+        with Connection.get_instance() as cur:
+            sql_create = """CREATE TABLE IF NOT EXISTS purchase (
+                            purchase_id serial PRIMARY KEY,
+                            date DATE,
+                            purchase_time TIME,
+                            total_price DECIMAL(5,2),
+                            nb_article INT,
+                            carte_code INT)"""
+            cur.execute(sql_create)
 
     @staticmethod
     def insert():
-        conn = psycopg2.connect(dbname="shopping", user="lolo", host="localhost", password="cestmoi")
-        cur = conn.cursor()
-        sql = """INSERT INTO purchase (date, purchase_time, total_price, nb_article, carte_code) 
-                 VALUES (%s, %s, %s, %s, %s);"""
-        menu_datas = Purchase.menu()
-        print(menu_datas)
-        cur.execute(sql, menu_datas)
-        conn.commit()
-        cur.close()
-        conn.close()
-        conn = psycopg2.connect(dbname='shopping', user='lolo', password='cestmoi', host='localhost')
-        cur = conn.cursor()
-        sql_max_id = """SELECT purchase_id FROM purchase
-               WHERE purchase_id = (SELECT MAX(purchase_id) FROM purchase) """
-        cur.execute(sql_max_id)
-        last_purchase_id = cur.fetchone()
-        conn.commit()
-        cur.close()
-        conn.close()
+        with Connection.get_instance() as cur:
+            sql = """INSERT INTO purchase (date, purchase_time, total_price, nb_article, carte_code) 
+                     VALUES (%s, %s, %s, %s, %s);"""
+            menu_datas = Purchase.menu()
+            print(menu_datas)
+            cur.execute(sql, menu_datas)
+        with Connection.get_instance() as cur:
+            sql_max_id = """SELECT purchase_id FROM purchase
+                   WHERE purchase_id = (SELECT MAX(purchase_id) FROM purchase) """
+            cur.execute(sql_max_id)
+            last_purchase_id = cur.fetchone()
         print("le type du pruchase_id est: ", type(last_purchase_id[0]))
         return last_purchase_id[0], menu_datas[3], menu_datas[0], menu_datas[1]
 
@@ -96,7 +79,7 @@ class Purchase:
                 last_article = 0
                 last_purchase, nb_articles, day, hour = Purchase.insert()
                 store = self.store.insert_store()
-                self.purchase_store.insert(last_purchase, store)
+                PurchaseStore.insert(last_purchase, store)
             print(last_purchase, nb_articles, store, day, hour, last_article)
             self.product.record_product(last_purchase, nb_articles, store, day, hour, last_article)
             purch = Ask.ask_string('enregistrer un autre achat (o/n)? ', yn=True)

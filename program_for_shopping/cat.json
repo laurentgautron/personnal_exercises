@@ -6,7 +6,8 @@
         "bananes",
         "oranges",
         "kiwis",
-        "concombres"
+        "concombres",
+        "figues"
     ],
     "Produits laitiers": [
         "Fromages"
@@ -16,7 +17,8 @@
         "cochon"
     ],
     "ap\u00e9ritifs": [
-        "tuiles"
+        "tuiles",
+        "tabac"
     ],
     "confisseries": [
         "chocolat",
@@ -32,7 +34,9 @@
     ],
     "l\u00e9gumes": [
         "choux",
-        "c\u00e9leris"
+        "c\u00e9leris",
+        "courges",
+        "salades"
     ],
     "f\u00e9culents": [
         "p\u00e2tes"
