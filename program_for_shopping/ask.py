@@ -41,9 +41,11 @@ class Ask:
                 print('bon nombre? ', Check.nb(choice))
                 return int(choice)
             elif weight and Check.weight(choice):
+                choice = choice.replace(',', '.')
                 print('bon poids? ', Check.weight(choice))
                 return float(choice)
             elif price and Check.price(choice):
+                choice = choice.replace(',', '.')
                 print('bon prix? ', Check.price(choice))
                 return float(choice)
             elif hour and Check.hour(choice):

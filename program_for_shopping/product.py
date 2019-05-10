@@ -2,10 +2,7 @@ import json
 from store_product import StoreProduct
 from purchase_product import PurchaseProduct
 from new import New
-<<<<<<< HEAD
 from connection import Connection
-=======
->>>>>>> f02410523c77eb5f8b13fbff2209dacc06841ec1
 
 
 class Product:
@@ -16,7 +13,6 @@ class Product:
 
     @staticmethod
     def find_last_product():
-<<<<<<< HEAD
         with Connection.get_instance() as cur:
             sql = """ SELECT product_name FROM product
                       JOIN purchase_product ON product.product_id = purchase_product.product_id
@@ -25,38 +21,26 @@ class Product:
             cur.execute(sql)
             last_product = cur.fetchone()
         print('le last est', last_product[0])
-=======
-        conn = psycopg2.connect(dbname="shopping", user='lolo', password='cestmoi', host='localhost')
-        cur = conn.cursor()
-        sql = """ SELECT product_name FROM product
-                  JOIN purchase_product ON purchase_product.id = (SELECT MAX(purchase_product.id) 
-                  FROM purchase_product)"""
-        cur.execute(sql)
-        last_product = cur.fetchone()
-        conn.commit()
-        cur.close()
-        conn.close()
->>>>>>> f02410523c77eb5f8b13fbff2209dacc06841ec1
         return last_product[0]
 
     @staticmethod
     def insert(result):
         with Connection.get_instance() as cur:
-            sql_insert = """INSERT INTO product(product_name, product_category, sub_category, food, processed_food)
-                            VALUES(%s, %s, %s, %s, %s);"""
+            sql_insert = """INSERT INTO product(product_name, product_category, sub_category, 
+                            food, processed_food, weight) VALUES(%s, %s, %s, %s, %s, %s);"""
             cur.execute(sql_insert, result)
         with Connection.get_instance() as cur:
             cur.execute("SELECT product_id FROM product WHERE product_id = (SELECT max(product_id) FROM product);")
             product_id = cur.fetchone()
         return product_id[0]
 
-    def insert_product(self, product_name):
+    def insert_product(self, product_name, weight):
         with Connection.get_instance() as cur:
             cur.execute("SELECT product_id FROM product WHERE product.product_name = %s;", (product_name,))
             result = cur.fetchone()
         if not result:
             data_list = New.new_product()
-            result = product_name, data_list[0], data_list[1], data_list[2], data_list[3]
+            result = product_name, data_list[0], data_list[1], data_list[2], data_list[3], weight
             print(result)
             product_id = self.insert(result)
         else:
@@ -67,6 +51,7 @@ class Product:
         for article in range(last_article, nb_articles):
             print('enregistrer l\'article n° ', article + 1)
             product_name = input('entrez le nom du produit: (taper exit à la place du nom pour quitter en cours) ')
+            weight = Ask.ask_number('entrer le poids du produit', weight=True)
             if product_name != 'exit':
                 product = self.insert_product(product_name)
                 print('les produtis et stores', product, store)
@@ -94,5 +79,6 @@ class Product:
                             product_category VARCHAR(100),
                             sub_category VARCHAR(100),
                             food BOOLEAN,
-                            processed_food BOOLEAN)"""
+                            processed_food BOOLEAN,
+                            weight DECIMAL(6,3));"""
             cur.execute(sql_create)

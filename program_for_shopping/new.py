@@ -1,6 +1,7 @@
 import json
 from ask import Ask
 
+
 class New:
 
     @staticmethod
