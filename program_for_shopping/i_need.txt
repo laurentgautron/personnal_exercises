@@ -26,3 +26,6 @@ déterminer pour un produit déjà existant ( dans product ) que c'est de la nou
 
 rechercher le nom du magasin (avec le id) lorsqu'on affiche un achat non terminé
 pareil pour le dernier produit enregistré.
+
+faire un menu pour collecter les données et enregistrer les données lorsque tout l'achat est fini...
+pouvoir quitter à tout instant en tapant exit
