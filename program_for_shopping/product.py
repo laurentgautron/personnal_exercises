@@ -3,6 +3,7 @@ from store_product import StoreProduct
 from purchase_product import PurchaseProduct
 from new import New
 from connection import Connection
+from ask import Ask
 
 
 class Product:
@@ -34,11 +35,12 @@ class Product:
             product_id = cur.fetchone()
         return product_id[0]
 
-    def insert_product(self, product_name, weight):
+    def insert_product(self, product_name):
         with Connection.get_instance() as cur:
             cur.execute("SELECT product_id FROM product WHERE product.product_name = %s;", (product_name,))
             result = cur.fetchone()
         if not result:
+            weight = Ask.ask_number('entrer le poids du produit: ', weight=True)
             data_list = New.new_product()
             result = product_name, data_list[0], data_list[1], data_list[2], data_list[3], weight
             print(result)
@@ -51,7 +53,6 @@ class Product:
         for article in range(last_article, nb_articles):
             print('enregistrer l\'article n° ', article + 1)
             product_name = input('entrez le nom du produit: (taper exit à la place du nom pour quitter en cours) ')
-            weight = Ask.ask_number('entrer le poids du produit', weight=True)
             if product_name != 'exit':
                 product = self.insert_product(product_name)
                 print('les produtis et stores', product, store)

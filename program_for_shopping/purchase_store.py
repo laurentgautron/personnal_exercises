@@ -15,7 +15,8 @@ class PurchaseStore:
                             REFERENCES store (store_id));"""
             cur.execute(sql_create)
 
-    def insert(self, purchase, store):
+    @staticmethod
+    def insert(purchase, store):
         with Connection.get_instance() as cur:
             sql_insert = """INSERT INTO purchase_store (purchase_id, store_id) VALUES (%s, %s)"""
             cur.execute(sql_insert, (purchase, store))
