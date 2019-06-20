@@ -1,6 +1,7 @@
 from connection import Connection
 from ask import Ask
 
+
 class PurchaseProduct:
 
     @staticmethod
