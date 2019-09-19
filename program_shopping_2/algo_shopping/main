@@ -1,0 +1,17 @@
+créer une la base de données shopping si non existante
+créer les tables purchase, product, store, purchase_product
+
+
+Tant que vrai
+  afficher le menu
+  récupérer le choix de menu
+  si choix = 1 (terminer purchase)
+    terminer purchase
+  sinon si choix = 2 (commencer purchase)
+    commencer purchase
+  sinon si choix = 3 (exploration  des données)
+    exploration d es données
+  sinon
+    quitter programme
+
+lancer programme principal
