@@ -1,0 +1,38 @@
+Tant que vrai
+	faire une liste des purchases faux
+	tant que la liste n'est pas vide
+		afficher la liste
+		demander de choisir un élément de la liste ( = id )
+		faire une liste de choix possible pour l'élément choisi: suppression, continuer ou abandon
+		si choix = suppression
+			suppression (id )
+		sinon si choix = continuer
+			continuer (id )
+		sinon si choix = abandon
+			quitter la boucle de liste
+		sinon
+			écrire "pas bonne réponse"
+
+continuer purchase (id)
+	si id <> 0
+		nb produits = produits de la table purchase(id)-product
+		prix = somme des prix de purchase(id)-product
+	sinon
+		récupérer les données en base de donnée pour la table purchase
+		nb produits initialisé à 0
+		prix initialisé à 0
+	liste des produits initialisée à vrai
+	tant que la liste des produits n'est pas finie d'être rentrée ou pas abandon
+		écrire "entrer le produit"
+		si réponse = e ( end )
+			écrire "votre liste de course est terminée"
+			liste des produits = faux
+		sinon si réponse = a ( abandon )
+			écrire "au revoir"
+		sinon
+		    enregistrer le produit (en base de donnée: table product)
+			récupérer quantité, poids ( si pas conditionné ) et prix ( en base purchase(id)-product )
+		prix = prix produit + prix
+		nb produit = nb produit + 1
+	si liste des produits = faux
+		mettre la variable purch à vrai

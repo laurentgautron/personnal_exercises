@@ -1,0 +1,10 @@
+nom du magasin = demander le nom du magasin
+mettre le store_id à 0
+chercher si le magasin existe
+si oui
+	afficher une liste de magasin correspondant au nom
+	récupérer le choix du magasin (vérifier qu'il appartient bien à la liste)
+	si choix_magasin <> 0
+		store_id = numéro du choix
+sinon
+	création du magasin (nom du magsin)

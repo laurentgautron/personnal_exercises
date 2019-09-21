@@ -1,0 +1,9 @@
+récupérer l'heure et la date d'enregistrement
+demander "laisser la date et l'heure du jour"
+si réponse oui
+	date = date du jour
+	heure = heure du jour
+sinon
+	enregistrer la date et l'heure au clavier et vérifier le bon format de date et d'heure
+récupérer le magasin
+récupéree la carte de paiement
