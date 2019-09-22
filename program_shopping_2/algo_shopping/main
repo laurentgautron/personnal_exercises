@@ -10,8 +10,10 @@ Tant que vrai
   sinon si choix = 2 (commencer purchase)
     commencer purchase
   sinon si choix = 3 (exploration  des données)
-    exploration d es données
+    exploration des données
   sinon
-    quitter programme
+    demandersi quitter programme ou continuer
+    si choix = quitter
+      quitter programme
 
 lancer programme principal
