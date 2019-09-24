@@ -1,0 +1,11 @@
+initialise l'id du produit à 0
+lire le nom du produit
+rechercher le produit dans la base de données
+si nom dans la base
+  afficher la liste des produits ( tous renseignements sur produits)
+  récupérer le choix de l'utilisateur
+  si choix <> 0 et dans la liste
+    récupérer l'id du produit
+sinon
+  création du produit ( avec nom )
+retourner l'id du produit
