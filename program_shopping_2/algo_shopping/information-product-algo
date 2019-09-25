@@ -1,0 +1,29 @@
+demander si nourriture ( variable dans table product pour dire nourriture)
+si nourriture demander si conditionnée
+  récupérer poids conditionné
+demander si transformée
+si nourriture
+  mettre la variable conditionnée à vraie
+  demander le poids conditionnée
+catégorie = false
+tant que faux ( cat = false et sous-cat = false)
+  afficher les catégories
+  demander catégorie
+  si rep = pas dans la liste
+    demander si nouvelle catégorie
+    si oui
+      créer nouvelle catégorie ( et sous-catégorie)
+      créer nouvelle sous-catégorie
+      cat, sous-cat = true
+  sinon
+    cat = true
+    afficher sous-catégories ( de catégories)
+    demander sous-catégorie
+    si rep pas dans la liste
+      demander si nouvelle sous-catégorie
+      si oui
+        créer une nouvelle sous-catégorie
+        sous-cat = true
+    sous-cat = true
+enregistrer les données dans table product
+retourner l'id du produit
