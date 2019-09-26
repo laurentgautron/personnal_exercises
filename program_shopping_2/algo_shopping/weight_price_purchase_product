@@ -1,0 +1,17 @@
+si price = true
+  max = 50000
+sinon
+  max = 20000
+(faire un ternaire )
+tant que vrai
+  demander poids ou prix
+  si poids < 0
+   écrire: poids positif
+  sinon
+    si poids x 1000 > max
+      écrire : pas possible ( pas autorisé )
+    sinon si poids x 1000 < max et à virgule
+      écrire: trois chiffres après la virgule
+    sinon
+      quitter boucle
+retourner le poids ou prix

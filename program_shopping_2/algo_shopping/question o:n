@@ -1,0 +1,6 @@
+tant que vrai
+  rep = poser question
+  si rep pas dans (o,n)
+    écrire : répondre par oui ou non
+  sinon
+    quitter boucle
