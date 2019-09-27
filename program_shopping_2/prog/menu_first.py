@@ -16,8 +16,8 @@ class Menu:
             except ValueError:
                 print("vous devez choisir un chiffre entier entre 1 et 4")
             else:
-                if int(choice) not in range(1, len(list_menu)):
+                if int(choice) not in range(1, len(list_menu)+1):
                     print(" ce chiffre ne fait pas parti des choix possibles")
                 else:
                     break
-        return "votre choix  est: %s" % list_menu[int(choice)-1]
+        return int(choice)
