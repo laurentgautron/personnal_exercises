@@ -5,14 +5,16 @@ créer les tables purchase, product, store, purchase_product
 Tant que vrai
   afficher le menu
   récupérer le choix de menu
-  si choix = 1 (terminer purchase)
+  si choix pas dans liste choix
+    écrire : ce choix n'est pas dans la lste
+  sinon si choix = 1 (terminer purchase)
     terminer purchase
   sinon si choix = 2 (commencer purchase)
     commencer purchase
   sinon si choix = 3 (exploration  des données)
     exploration des données
   sinon
-    demandersi quitter programme ou continuer
+    demander si quitter programme ou continuer
     si choix = quitter
       quitter programme
 
