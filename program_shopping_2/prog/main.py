@@ -1,13 +1,23 @@
-#from database import Database
+import os
+import psycopg2
+from tables import Tables
 from menu_first import Menu
 
 class Shopping:
 
-    #def __init__(self):
-    #    Database.create()
+    def __init__(self):
+        con = psycopg2.connect(dbname="postgres", user='laurentg', password="")
+        print("Database opened successfully")
+        con.autocommit = True
+        cur = con.cursor()
+        cur.execute("DROP DATABASE IF  EXISTS lolo;")
+        cur.execute("""CREATE DATABASE lolo;""")
+        cur.close()
+        con.close()
+        Tables.create()
 
-    @staticmethod
-    def menu():
+    def menu(self):
+        os.system('clear')
         while True:
             choice = Menu.display()
             if choice == 1:
@@ -21,4 +31,5 @@ class Shopping:
                 break
 
 if __name__ == "__main__":
-    Shopping.menu()
+    shopping = Shopping()
+    shopping.menu()
