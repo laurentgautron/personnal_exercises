@@ -2,18 +2,13 @@ import os
 import psycopg2
 from tables import Tables
 from menu_first import Menu
+from connection import Connection
+from database import Database
 
 class Shopping:
 
     def __init__(self):
-        con = psycopg2.connect(dbname="postgres", user='laurentg', password="")
-        print("Database opened successfully")
-        con.autocommit = True
-        cur = con.cursor()
-        cur.execute("DROP DATABASE IF  EXISTS lolo;")
-        cur.execute("""CREATE DATABASE lolo;""")
-        cur.close()
-        con.close()
+        Database.create()
         Tables.create()
 
     def menu(self):

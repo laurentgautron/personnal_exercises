@@ -1,6 +1,6 @@
 from purchase import Purchase
-from product import product
-from store import store
+from product import Product
+from store import Store
 from purchase_product import Purchase_product
 
 class Tables:

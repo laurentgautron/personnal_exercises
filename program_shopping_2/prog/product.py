@@ -4,9 +4,9 @@ class Product:
 
     @staticmethod
     def create():
-        with Connection.get_intance() as cur:
+        with Connection.get_cursor() as cur:
             cur.execute("""CREATE TABLE IF NOT EXISTS product (
-                        id sérial PRIMARY KEY,
+                        id SERIAL PRIMARY KEY,
                         product_name VARCHAR(100),
                         great_category VARCHAR(100),
                         category VARCHAR(100),

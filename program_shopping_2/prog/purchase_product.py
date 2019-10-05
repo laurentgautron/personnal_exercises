@@ -1,12 +1,12 @@
 from connection import Connection
 
-class Purchase:
+class Purchase_product:
 
     @staticmethod
     def create():
-        with Connection.get_instance() as cur:
+        with Connection.get_cursor() as cur:
             cur.execute("""CREATE TABLE IF NOT EXISTS purchase_product(
-                        id sérial PRIMARY KEY,
+                        id SERIAL PRIMARY KEY,
                         purchase_id INT,
                         product_id INT,
                         price DECIMAL(5,2),
