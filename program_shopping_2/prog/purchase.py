@@ -15,3 +15,10 @@ class Purchase:
                         card_code INT,
                         store_id INT);"""
                         )
+
+    @staticmethod
+    def false_purchase():
+        with Connection.get_cursor() as cur:
+            cur.execute("""SELECT id FROM purchase WHERE purch = False;""")
+            purchase = cur.fetchall()
+        return purchase

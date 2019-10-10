@@ -4,6 +4,7 @@ from tables import Tables
 from menu_first import Menu
 from connection import Connection
 from database import Database
+from record import Record
 
 class Shopping:
 
@@ -17,6 +18,7 @@ class Shopping:
             choice = Menu.display()
             if choice == 1:
                 print("vous voulez terminer un achat en cours")
+                Record.record()
             elif choice == 2:
                 print(" vous voulez enregistrer un achat")
             elif choice == 3:
