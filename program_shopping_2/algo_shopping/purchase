@@ -10,8 +10,7 @@ Tant que vrai
 			continuer (id )
 		sinon si choix = abandon
 			quitter la boucle de liste
-		sinon
-			écrire "pas bonne réponse"
+
 
 continuer purchase (id)
 	si id <> 0

@@ -1,4 +1,6 @@
 from connection import Connection
+from display import Display
+from menu import Menu
 
 class Purchase:
 
@@ -20,5 +22,18 @@ class Purchase:
     def false_purchase():
         with Connection.get_cursor() as cur:
             cur.execute("""SELECT id FROM purchase WHERE purch = False;""")
-            purchase = cur.fetchall()
-        return purchase
+            purchase_incourse_list = cur.fetchall()
+        while True:
+            if not purchase_incourse_list:
+                print(purchase_incourse_list)
+                print("la liste est vide: pas de ticket en cours d'enregistrement")
+                break
+            while purchase_incourse_list:
+                purchase_choice = Menu.display_menu("choisissez un élément de la liste", menu=purchase_incourse_list)
+                action_choice = Menu.display_menu("quelle action voulez-vous effectuer sur cet achat ?", menu="second")
+                if action_choice == "continuer":
+                    print("vous continuez l'enregistrement de cet achat")
+                elif action_choice == "supprimer":
+                    print("vouqs supprimez cdet enregistrement")
+                else:
+                    break

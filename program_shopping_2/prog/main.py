@@ -1,10 +1,9 @@
 import os
 import psycopg2
 from tables import Tables
-from menu_first import Menu
-from connection import Connection
+from menu import Menu
 from database import Database
-from record import Record
+from purchase import Purchase
 
 class Shopping:
 
@@ -12,16 +11,17 @@ class Shopping:
         Database.create()
         Tables.create()
 
-    def menu(self):
+    @staticmethod
+    def menu():
         os.system('clear')
         while True:
-            choice = Menu.display()
-            if choice == 1:
-                print("vous voulez terminer un achat en cours")
-                Record.record()
-            elif choice == 2:
+            choice = Menu.display_menu("votre choix: ", menu="first")
+            if choice == "voir les achats en cours":
+                print("vous voulez voir les achats en cours d'enregistrement")
+                Purchase.false_purchase()
+            elif choice == "commencer un achat":
                 print(" vous voulez enregistrer un achat")
-            elif choice == 3:
+            elif choice == "explorer des données":
                 print(" vous voulez explorer les donnée enregistrée en base")
             else:
                 print("vous nous quittez , à bientôt")
