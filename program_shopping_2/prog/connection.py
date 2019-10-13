@@ -10,7 +10,6 @@ class Connection:
         self.conn = psycopg2.connect(dbname="shopping", user="laurentg", password="", host="localhost")
         atexit.register(self.deconnection)
 
-
     def __enter__(self):
         self.cur = self.conn.cursor()
         return self.cur
