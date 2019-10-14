@@ -15,7 +15,7 @@ class Shopping:
     def menu():
         os.system('clear')
         while True:
-            choice = Menu.display_menu("votre choix: ", menu="first")
+            choice = Menu.display_menu(sentence="votre choix: ", menu="first")
             if choice == "voir les achats en cours":
                 print("vous voulez voir les achats en cours d'enregistrement")
                 Purchase.false_purchase()
