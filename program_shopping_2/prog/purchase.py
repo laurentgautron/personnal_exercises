@@ -37,7 +37,7 @@ class Purchase:
             if action_choice == "continuer":
                 print("vous continuez l'enregistrement de cet achat")
             elif action_choice == "supprimer":
-                print("vouqs supprimez cet enregistrement")
+                print("vous supprimez cet enregistrement")
                 Purchase.purchase_delete(purchase_choice[0])
                 purchase_incourse_list.remove(purchase_choice)
             else:
