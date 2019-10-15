@@ -20,8 +20,8 @@ continuer purchase (id)
 		récupérer les données en base de donnée pour la table purchase
 		nb produits initialisé à 0
 		prix initialisé à 0
-	liste des produits initialisée à vrai
-	tant que la liste des produits n'est pas finie d'être rentrée ou pas abandon
+	variable purch initialisée à vrai
+	tant que la liste des produits n'est pas finie (e) d'être rentrée ou pas abandon (q)
 		écrire "entrer le produit"
 		si réponse = e ( end )
 			écrire "votre liste de course est terminée"

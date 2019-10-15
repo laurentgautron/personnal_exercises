@@ -42,3 +42,25 @@ class Purchase:
                 purchase_incourse_list.remove(purchase_choice)
             else:
                 break
+
+    @staticmethod
+    def purchase_record():
+        date_and_hour_day =
+        date_choice = Check.check_yn("voulez_vous garder la date et l'heure du jour ? ")
+        if date_choice == 'o':
+            date = datejour
+            hour = heure du jour
+        else:
+            date_choice = Check.check_date("enrez la date")
+            hour = Check.check_hour("entrez l'heure")
+        store_id = Store.get_storeid("entrez le nom du magasin")
+        card_code = Check.check_cardcode("entrez le numéro de carte")
+        with machin carte_list as truc:
+            la liste des cartes
+        if card_code not in list_card_code:
+            new_card = Check.check_yn("nouvelle carte ? ")
+            if new_card == 'o':
+                remove_old_card = Check.check_yn("supprimer l'ancien code ? ")
+                supprimer l'ancien code
+            enregistrer le nouveau code dans la liste
+        enregistrer les données dans la table purchase

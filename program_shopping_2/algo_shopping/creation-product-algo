@@ -1,29 +1,24 @@
-demander si nourriture ( variable dans table product pour dire nourriture)
-si nourriture demander si conditionnée
-  récupérer poids conditionné
-demander si transformée
-si nourriture
-  mettre la variable conditionnée à vraie
-  demander le poids conditionnée
-catégorie = false
-tant que faux ( cat = false et sous-cat = false)
-  afficher les catégories
-  demander catégorie
-  si rep = pas dans la liste
-    demander si nouvelle catégorie
-    si oui
-      créer nouvelle catégorie ( et sous-catégorie)
-      créer nouvelle sous-catégorie
-      cat, sous-cat = true
-  sinon
-    cat = true
-    afficher sous-catégories ( de catégories)
-    demander sous-catégorie
-    si rep pas dans la liste
-      demander si nouvelle sous-catégorie
-      si oui
-        créer une nouvelle sous-catégorie
-        sous-cat = true
-    sous-cat = true
+obtenu le nom du produit
+afficher liste de catégorie 1
+demander choix catégorie 1
+si choix = "nourriture"
+  demander si transformée
+  si transformée:
+    mettre la variable transformée à vraie
+  demander si conditionnée
+  si conditionnée:
+    mettre la variable conditionnée à vraie
+    demander le poids conditionnée
+afficher choix catégorie 2
+demander caegorie 2 u N ( nouvelle catégorie )
+si rep = N:
+  créer et enregistrer une nouvelle categorie 2
+  si choix cat 1 = "nourriture":
+    créer nouvelle sous-categorie
+sinon si choix cat 1 = "nourriture":
+  afficher liste catégorie 3
+  demander choix cat 3
+  si rep = N:
+    créer et enregistrer une nouvelle categorie 3
 enregistrer les données dans table product
 retourner l'id du produit
