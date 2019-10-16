@@ -3,7 +3,7 @@
 class Check:
 
     @staticmethod
-    def check_choice(list_menu, sentence):
+    def check_choice_list(list_menu, sentence):
         max = len(list_menu)
         while True:
             print(sentence)
@@ -18,3 +18,28 @@ class Check:
                 else:
                     break
         return list_menu[int(choice)-1]
+
+    @staticmethod
+    def check_yn(sentence):
+        while True:
+            rep = input(sentence)
+            if rep not in ('y','n'):
+                print("répondez par oui(taper o) ou non(tapez n)")
+            else:
+                break
+        return rep
+
+    @staticmethod
+    def check_cardcode(sentence):
+        while True:
+            card_code = input(sentence)
+            try:
+                int(card_code)
+            except ValueError:
+                print('vous devez rentrer un nombre')
+            else
+                if len(card_code) > 4:
+                    print('rentrez un nombre entier de 4 chiffres')
+                else:
+                    break
+        return int(card_code)

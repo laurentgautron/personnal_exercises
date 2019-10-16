@@ -13,7 +13,7 @@ class Display:
             print(ind+1, " - ", end="")
             elmt = elmt[2:]
             print(elmt, sep=", ")
-        choice = Check.check_choice(values_list, sentence)
+        choice = Check.check_choice_list(values_list, sentence)
         print("le choice d ans display_values: ", choice)
         input()
         return choice

@@ -54,7 +54,7 @@ class Purchase:
             date_choice = Check.check_date("enrez la date")
             hour = Check.check_hour("entrez l'heure")
         store_id = Store.get_storeid("entrez le nom du magasin")
-        card_code = Check.check_cardcode("entrez le numéro de carte")
+        card_code = Check.check_cardcode("entrez le numéro de carte ( les 4 dernier chiffres de la carte )")
         with machin carte_list as truc:
             la liste des cartes
         if card_code not in list_card_code:
