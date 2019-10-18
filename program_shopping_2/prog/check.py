@@ -1,4 +1,4 @@
-
+import datetime
 
 class Check:
 
@@ -23,7 +23,7 @@ class Check:
     def check_yn(sentence):
         while True:
             rep = input(sentence)
-            if rep not in ('y','n'):
+            if rep not in ('o','n'):
                 print("répondez par oui(taper o) ou non(tapez n)")
             else:
                 break
@@ -37,9 +37,33 @@ class Check:
                 int(card_code)
             except ValueError:
                 print('vous devez rentrer un nombre')
-            else
+            else:
                 if len(card_code) > 4:
                     print('rentrez un nombre entier de 4 chiffres')
                 else:
                     break
         return int(card_code)
+
+    @staticmethod
+    def check_date(sentence):
+        while True:
+            date = input(sentence)
+            try:
+                datetime.datetime.strptime(date, "%d/%m/%Y")
+            except ValueError:
+                print("vous n'avez pas rentré un bon format de date")
+            else:
+                break
+        return datetime.datetime.strptime(date, "%d/%m/%Y").date()
+
+    @staticmethod
+    def check_hour(sentence):
+        while True:
+            hour = input(sentence)
+            try:
+                datetime.datetime.strptime(hour, "%H:%M")
+            except ValueError:
+                print("vous n'avez pas rentré une bonne heure")
+            else:
+                break
+        return datetime.datetime.strptime(hour, "%H:%M").time()

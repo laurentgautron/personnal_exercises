@@ -17,5 +17,5 @@ class Menu:
         elif menu == "second":
             list_menu = __class__.FALSE_PURCHASE_LIST
         Display.display(list_menu)
-        choice = Check.check_choice(list_menu, sentence)
+        choice = Check.check_choice_list(list_menu, sentence)
         return choice

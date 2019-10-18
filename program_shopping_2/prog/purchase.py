@@ -1,6 +1,8 @@
+from datetime import datetime
 from connection import Connection
 from display import Display
 from menu import Menu
+from check import Check
 
 class Purchase:
 
@@ -45,22 +47,22 @@ class Purchase:
 
     @staticmethod
     def purchase_record():
-        date_and_hour_day =
-        date_choice = Check.check_yn("voulez_vous garder la date et l'heure du jour ? ")
+        dateint, hourint = datetime.today().date(), datetime.today().time().isoformat(timespec='seconds')
+        date_choice = Check.check_yn("voulez_vous garder la date et l'heure du jour (o/n)? ")
         if date_choice == 'o':
-            date = datejour
-            hour = heure du jour
+            date = datetime.today().date()
+            hour = datetime.today().time().isoformat(timespec='seconds')
         else:
-            date_choice = Check.check_date("enrez la date")
-            hour = Check.check_hour("entrez l'heure")
-        store_id = Store.get_storeid("entrez le nom du magasin")
-        card_code = Check.check_cardcode("entrez le numéro de carte ( les 4 dernier chiffres de la carte )")
-        with machin carte_list as truc:
-            la liste des cartes
-        if card_code not in list_card_code:
-            new_card = Check.check_yn("nouvelle carte ? ")
-            if new_card == 'o':
-                remove_old_card = Check.check_yn("supprimer l'ancien code ? ")
-                supprimer l'ancien code
-            enregistrer le nouveau code dans la liste
-        enregistrer les données dans la table purchase
+            date_choice = Check.check_date("enrez la date (jj/mm/YYYY): ")
+            hour = Check.check_hour("entrez l'heure (H:M): ")
+        #store_id = Store.get_storeid("entrez le nom du magasin")
+        card_code = Check.check_cardcode("entrez le numéro de carte ( les 4 dernier chiffres de la carte ): ")
+        #with machin carte_list as truc:
+            #la liste des cartes
+        #if card_code not in list_card_code:
+            #new_card = Check.check_yn("nouvelle carte ? ")
+            #if new_card == 'o':
+                #remove_old_card = Check.check_yn("supprimer l'ancien code ? ")
+                #supprimer l'ancien code
+            #enregistrer le nouveau code dans la liste
+        #enregistrer les données dans la table purchase
