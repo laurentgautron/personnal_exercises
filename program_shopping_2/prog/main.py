@@ -22,7 +22,7 @@ class Shopping:
             elif choice == "commencer un achat":
                 print(" vous voulez enregistrer un achat")
                 datas = Purchase.purchase_get_data()
-                Purchase_record(datas)
+                Purchase.purchase_record(datas)
             elif choice == "explorer des données":
                 print(" vous voulez explorer les donnée enregistrée en base")
             else:

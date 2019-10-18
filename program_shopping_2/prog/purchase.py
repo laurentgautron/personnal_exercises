@@ -17,8 +17,8 @@ class Purchase:
                         article_number INT,
                         total_price DECIMAL(5,2),
                         card_code INT,
-                        store_id INT;
-                        date and_hour DATETIME);"""
+                        store_id INT,
+                        date_and_hour TIMESTAMP);"""
                         )
 
     @staticmethod
@@ -48,7 +48,7 @@ class Purchase:
 
     @staticmethod
     def purchase_get_data():
-        date_and hour_int = datetime.today()
+        date_and_hour_in = datetime.today()
         date_choice = Check.check_yn("voulez_vous garder la date et l'heure du jour (o/n)? ")
         if date_choice == 'o':
             date = datetime.today().date()
@@ -66,12 +66,11 @@ class Purchase:
                 #remove_old_card = Check.check_yn("supprimer l'ancien code ? ")
                 #supprimer l'ancien code
             #enregistrer le nouveau code dans la liste
-        return date_and_hour_int, date, hour, card_code, storeid
+        return date, hour, card_code, date_and_hour_in
 
     @staticmethod
-    def Purchase_record(datas):
-        with connection.get_cursor() as cur:
-            sql = ("""INSERT INTO purchase(date, hour, card_code, store_id, date_and_hour_int)
-                      VALUES(%s, %s, %s, %s, %s);""")
+    def purchase_record(datas):
+        with Connection.get_cursor() as cur:
+            sql = ("""INSERT INTO purchase(date, hour, card_code, date_and_hour)
+                      VALUES(%s, %s, %s, %s);""")
             cur.execute(sql, datas)
-            
