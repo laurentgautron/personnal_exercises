@@ -17,7 +17,8 @@ class Purchase:
                         article_number INT,
                         total_price DECIMAL(5,2),
                         card_code INT,
-                        store_id INT);"""
+                        store_id INT;
+                        date and_hour DATETIME);"""
                         )
 
     @staticmethod
@@ -46,16 +47,16 @@ class Purchase:
                 break
 
     @staticmethod
-    def purchase_record():
-        dateint, hourint = datetime.today().date(), datetime.today().time().isoformat(timespec='seconds')
+    def purchase_get_data():
+        date_and hour_int = datetime.today()
         date_choice = Check.check_yn("voulez_vous garder la date et l'heure du jour (o/n)? ")
         if date_choice == 'o':
             date = datetime.today().date()
             hour = datetime.today().time().isoformat(timespec='seconds')
         else:
-            date_choice = Check.check_date("enrez la date (jj/mm/YYYY): ")
+            date = Check.check_date("enrez la date (jj/mm/YYYY): ")
             hour = Check.check_hour("entrez l'heure (H:M): ")
-        #store_id = Store.get_storeid("entrez le nom du magasin")
+        #storeid = Store.get_storeid("entrez le nom du magasin")
         card_code = Check.check_cardcode("entrez le numéro de carte ( les 4 dernier chiffres de la carte ): ")
         #with machin carte_list as truc:
             #la liste des cartes
@@ -65,4 +66,12 @@ class Purchase:
                 #remove_old_card = Check.check_yn("supprimer l'ancien code ? ")
                 #supprimer l'ancien code
             #enregistrer le nouveau code dans la liste
-        #enregistrer les données dans la table purchase
+        return date_and_hour_int, date, hour, card_code, storeid
+
+    @staticmethod
+    def Purchase_record(datas):
+        with connection.get_cursor() as cur:
+            sql = ("""INSERT INTO purchase(date, hour, card_code, store_id, date_and_hour_int)
+                      VALUES(%s, %s, %s, %s, %s);""")
+            cur.execute(sql, datas)
+            
