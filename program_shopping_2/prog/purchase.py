@@ -18,7 +18,7 @@ class Purchase:
                         total_price DECIMAL(5,2),
                         card_code INT,
                         store_id INT,
-                        date_and_hour TIMESTAMP);"""
+                        today TIMESTAMP);"""
                         )
 
     @staticmethod
@@ -48,7 +48,7 @@ class Purchase:
 
     @staticmethod
     def purchase_get_data():
-        date_and_hour_in = datetime.today()
+        today = datetime.today()
         date_choice = Check.check_yn("voulez_vous garder la date et l'heure du jour (o/n)? ")
         if date_choice == 'o':
             date = datetime.today().date()
@@ -66,7 +66,7 @@ class Purchase:
                 #remove_old_card = Check.check_yn("supprimer l'ancien code ? ")
                 #supprimer l'ancien code
             #enregistrer le nouveau code dans la liste
-        return date, hour, card_code, date_and_hour_in
+        return date, hour, card_code, today
 
     @staticmethod
     def purchase_record(datas):
