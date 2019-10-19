@@ -6,7 +6,7 @@ class Check:
     def check_choice_list(list_menu, sentence):
         max = len(list_menu)
         while True:
-            print(sentence)
+            print(sentence, end=" ")
             choice = input()
             try:
                 int(choice)

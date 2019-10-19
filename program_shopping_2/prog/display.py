@@ -14,6 +14,5 @@ class Display:
             elmt = elmt[2:]
             print(elmt, sep=", ")
         choice = Check.check_choice_list(values_list, sentence)
-        print("le choice d ans display_values: ", choice)
-        input()
+        print("vous avez choisi: " + ' ', choice)
         return choice

@@ -18,7 +18,7 @@ class Purchase:
                         total_price DECIMAL(5,2),
                         card_code INT,
                         store_id INT,
-                        today TIMESTAMP);"""
+                        today TIMESTAMP DEFAULT now());"""
                         )
 
     @staticmethod
@@ -34,8 +34,7 @@ class Purchase:
         if not purchase_incourse_list:
             print("la liste est vide: pas de ticket en cours d'enregistrement")
         while purchase_incourse_list:
-            print(purchase_incourse_list)
-            purchase_choice = Display.display_values(purchase_incourse_list, "choisissez un élément de la liste")
+            purchase_choice = Display.display_values(purchase_incourse_list, "choisissez un élément de la liste: ")
             action_choice = Menu.display_menu(menu="second", sentence="quelle action voulez-vous effectuer sur cet achat ?")
             if action_choice == "continuer":
                 print("vous continuez l'enregistrement de cet achat")
@@ -71,6 +70,6 @@ class Purchase:
     @staticmethod
     def purchase_record(datas):
         with Connection.get_cursor() as cur:
-            sql = ("""INSERT INTO purchase(date, hour, card_code, date_and_hour)
+            sql = ("""INSERT INTO purchase(date, hour, card_code, today)
                       VALUES(%s, %s, %s, %s);""")
             cur.execute(sql, datas)
