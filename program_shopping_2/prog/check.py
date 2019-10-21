@@ -11,11 +11,12 @@ class Check:
             try:
                 int(choice)
             except ValueError:
-                print("vous devez choisir un chiffre entier entre 1 et %s" %max)
+                print("vous devez choisir un chiffre entier entre 1 et %s ou bien quitter ( q )" %max)
             else:
                 if int(choice) not in range(1, len(list_menu)+1):
                     print(" ce chiffre ne fait pas parti des choix possibles")
-                else:
+                elif choice == 'q':
+                    return choice
                     break
         return list_menu[int(choice)-1]
 

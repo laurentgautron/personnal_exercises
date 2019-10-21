@@ -14,3 +14,40 @@ class Store:
                         postcode INT,
                         bank_name VARCHAR(100));"""
                         )
+
+    @staticmethod
+    def store_last_id():
+        with Connection.get_cursor() as cur:
+            cur.execute("SELECT MAX(id) FROM store;")
+            store_last_id = cur.fetchone()
+        return store_last_id
+
+    @staticmethod
+    def record_store():
+        name = input("entrez le nom du magasin: ")
+        road = input("entrez le nom de la rue: ")
+        road_number = input("entrez le numéro de la rue: ")
+        twon = input("entrez le nom de la ville: ")
+        postcode = Check.check_postcode("entrez le code postal de la ville: ")
+        bank_name = input("entrez (si vous le connaissez) le nom bancaire du magasin: ")
+        sql = ("INSERT INTO store values(%s, %s, %s, %s, %s, %s);")
+        with Connection.get_cursor() as cur:
+            cur.execute(sql, (name, road, road_number,twon, postcode, bank_name))
+        store_id = Store.store_last_id()
+        return store_id
+
+    @staticmethod
+    def store_chearch(store_name):
+        with Connection.get_cursor() as cur:
+            cur.execute("SELECT * FROM store WHERE name = %s;" %store_name)
+            store_list = cur.fetchall()
+        return store_list
+
+    @staticmethod
+    def get_store(sentence):
+        store_name = input(sentence)
+        store_list = store_chearch(store_name)
+        Display.display_store(store_list)
+        store_choice = Check.check_choice_list("choissez u nmagasin parmi la liste proposée ou bien quittez (q )")
+        if store_choice == 'q':
+            store_id = Store.record_store()
