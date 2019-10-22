@@ -18,6 +18,8 @@ class Check:
                 elif choice == 'q':
                     return choice
                     break
+                else:
+                    break
         return list_menu[int(choice)-1]
 
     @staticmethod
@@ -68,3 +70,18 @@ class Check:
             else:
                 break
         return datetime.datetime.strptime(hour, "%H:%M").time()
+
+    @staticmethod
+    def check_postcode():
+        while True:
+            postcode = input("entrez le code postal de la ville ( un nombrre entier composé de 5 chiffres): ")
+            try:
+                int(postcode)
+            except ValueError:
+                print("ceci n'est pas un nombre entier")
+            else:
+                if len(postcode) > 5:
+                    print("ce nombre entier a plus de 5 chiffres , ce n'est pas un code postal (français)")
+                else:
+                    break
+        return postcode

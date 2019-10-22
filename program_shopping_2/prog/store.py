@@ -1,4 +1,5 @@
 from connection import Connection
+from check import Check
 
 class Store:
 
@@ -27,27 +28,33 @@ class Store:
         name = input("entrez le nom du magasin: ")
         road = input("entrez le nom de la rue: ")
         road_number = input("entrez le numéro de la rue: ")
-        twon = input("entrez le nom de la ville: ")
-        postcode = Check.check_postcode("entrez le code postal de la ville: ")
+        town = input("entrez le nom de la ville: ")
+        postcode = Check.check_postcode()
         bank_name = input("entrez (si vous le connaissez) le nom bancaire du magasin: ")
-        sql = ("INSERT INTO store values(%s, %s, %s, %s, %s, %s);")
+        sql = ("""INSERT INTO store(name, road, road_number, town, postcode, bank_name)
+                values(%s, %s, %s, %s, %s, %s);""")
         with Connection.get_cursor() as cur:
-            cur.execute(sql, (name, road, road_number,twon, postcode, bank_name))
+            cur.execute(sql, (name, road, road_number, town, postcode, bank_name))
         store_id = Store.store_last_id()
         return store_id
 
     @staticmethod
     def store_chearch(store_name):
+        print("le type de store_name est: ", type(store_name))
         with Connection.get_cursor() as cur:
-            cur.execute("SELECT * FROM store WHERE name = %s;" %store_name)
+            cur.execute("SELECT * FROM store WHERE store.name = %s;", (store_name, ))
             store_list = cur.fetchall()
         return store_list
 
     @staticmethod
     def get_store(sentence):
         store_name = input(sentence)
-        store_list = store_chearch(store_name)
-        Display.display_store(store_list)
-        store_choice = Check.check_choice_list("choissez u nmagasin parmi la liste proposée ou bien quittez (q )")
-        if store_choice == 'q':
+        print(store_name, type(store_name))
+        store_list = Store.store_chearch(store_name)
+        if not store_list:
+            print("pas de magasins à ce nom")
+        else:
+            Display.display_store(store_list)
+            store_choice = Check.check_choice_list("choissez u nmagasin parmi la liste proposée ou bien quittez (q )")
+        if (not store_list) or (store_choice == 'q'):
             store_id = Store.record_store()
