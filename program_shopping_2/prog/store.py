@@ -55,6 +55,7 @@ class Store:
             print("pas de magasins à ce nom")
         else:
             Display.display_store(store_list)
-            store_choice = Check.check_choice_list("choissez u nmagasin parmi la liste proposée ou bien quittez (q )")
+            store_choice = Check.check_choice_list("choissez un nmagasin parmi la liste proposée ou bien quittez (q )")
         if (not store_list) or (store_choice == 'q'):
             store_id = Store.record_store()
+        return store_id

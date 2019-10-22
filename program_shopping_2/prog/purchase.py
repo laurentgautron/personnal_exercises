@@ -56,7 +56,7 @@ class Purchase:
         else:
             date = Check.check_date("enrez la date (jj/mm/YYYY): ")
             hour = Check.check_hour("entrez l'heure (H:M): ")
-        storeid = Store.get_store("entrez le nom du magasin: ")    
+        store_id = Store.get_store("entrez le nom du magasin: ")
         card_code = Check.check_cardcode("entrez le numéro de carte ( les 4 dernier chiffres de la carte ): ")
         #with machin carte_list as truc:
             #la liste des cartes
@@ -66,11 +66,11 @@ class Purchase:
                 #remove_old_card = Check.check_yn("supprimer l'ancien code ? ")
                 #supprimer l'ancien code
             #enregistrer le nouveau code dans la liste
-        return date, hour, card_code, today
+        return date, hour, card_code, today, store_id
 
     @staticmethod
     def purchase_record(datas):
         with Connection.get_cursor() as cur:
-            sql = ("""INSERT INTO purchase(date, hour, card_code, today)
-                      VALUES(%s, %s, %s, %s);""")
+            sql = ("""INSERT INTO purchase(date, hour, card_code, today, store_id)
+                      VALUES(%s, %s, %s, %s, %s);""")
             cur.execute(sql, datas)
