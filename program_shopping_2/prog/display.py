@@ -20,12 +20,11 @@ class Display:
     @staticmethod
     def display_store(store_list):
         for ind, elmt in enumerate(store_list):
-            print("l'adresse du magasin n° %s est: " %ind)
+            print("l'adresse du magasin n° %s est: " %str(ind+1))
             print(elmt)
-            for store in elmt:
-                print("nom: %s" %store(1))
-                print("rue: %s" %store(2))
-                print("numéro de la rue: %s" %store(3))
-                print("ville: %s" %store(4))
-                print("code postale: %s" %store(5))
-                print("le nom bancaire est: %s" %store(6))
+            print("nom: %s" %elmt[1])
+            print("rue: %s" %elmt[2])
+            print("numéro de la rue: %s" %elmt[3])
+            print("ville: %s" %elmt[4])
+            print("code postale: %s" %elmt[5])
+            print("le nom bancaire est: %s" %elmt[6])

@@ -1,3 +1,4 @@
+import json
 from datetime import datetime
 from connection import Connection
 from display import Display
@@ -21,6 +22,35 @@ class Purchase:
                         store_id INT,
                         today TIMESTAMP DEFAULT now());"""
                         )
+
+    @staticmethod
+    def change_code(card_code, list_card_code):
+        name = input("le nom de la pesonne à qui appartient le code")
+        list_status = ["compte perso", "compte commun"]
+        Display.display(list_status)
+        status = Check.check_choice_list(list_status, "de quel compte s'agit-il ? ")
+        compte = "commun" if status == "compte commun" else "perso"
+        Display.display(list_card_code[name][compte])
+        code_to_remove = Check.check_choice_list(list_card_code[name][compte], "supprimez l'ancien numéro: ")
+        list_card_code[name][compte].append(str(card_code))
+        list_card_code[name][compte].remove(code_to_remove)
+        with open("card_list_code.json", "w") as file:
+            json.dump(list_card_code, file)
+
+    @staticmethod
+    def card_code_isfind(list_card_code, card_code, find_personn = False):
+        find_someone = False
+        for human, values in list_card_code.items():
+            for status, codes in values.items():
+                for code in codes:
+                    if card_code == int(code):
+                        personn = human
+                        kind_card = status
+                        find_someone = True
+        if find_personn:
+            return personn, kind_card, find_someone
+        else:
+            return find_someone
 
     @staticmethod
     def purchase_delete(purchase_choice):
@@ -48,6 +78,9 @@ class Purchase:
 
     @staticmethod
     def purchase_get_data():
+        store_id = 0
+        with open("card_list_code.json", 'r') as card:
+            list_card_code = json.load(card)
         today = datetime.today()
         date_choice = Check.check_yn("voulez_vous garder la date et l'heure du jour (o/n)? ")
         if date_choice == 'o':
@@ -56,16 +89,17 @@ class Purchase:
         else:
             date = Check.check_date("enrez la date (jj/mm/YYYY): ")
             hour = Check.check_hour("entrez l'heure (H:M): ")
-        store_id = Store.get_store("entrez le nom du magasin: ")
-        card_code = Check.check_cardcode("entrez le numéro de carte ( les 4 dernier chiffres de la carte ): ")
-        #with machin carte_list as truc:
-            #la liste des cartes
-        #if card_code not in list_card_code:
-            #new_card = Check.check_yn("nouvelle carte ? ")
-            #if new_card == 'o':
-                #remove_old_card = Check.check_yn("supprimer l'ancien code ? ")
-                #supprimer l'ancien code
-            #enregistrer le nouveau code dans la liste
+        while store_id == 0 or store_id =='q':
+            store_id = Store.get_store("entrez le nom du magasin: ")
+        while True:
+            card_code = Check.check_cardcode("entrez le numéro de carte ( les 4 dernier chiffres de la carte ): ")
+            if not Purchase.card_code_isfind(list_card_code, card_code):
+                new_card = Check.check_yn("nouvelle carte ? ")
+                if new_card == 'o':
+                    Purchase.change_code(card_code, list_card_code)
+                    break
+            else:
+                break
         return date, hour, card_code, today, store_id
 
     @staticmethod

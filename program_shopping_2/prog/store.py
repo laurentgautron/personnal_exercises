@@ -1,5 +1,6 @@
 from connection import Connection
 from check import Check
+from display import Display
 
 class Store:
 
@@ -24,7 +25,8 @@ class Store:
         return store_last_id
 
     @staticmethod
-    def record_store():
+    def new_store():
+        print("vous allez créer un magasin")
         name = input("entrez le nom du magasin: ")
         road = input("entrez le nom de la rue: ")
         road_number = input("entrez le numéro de la rue: ")
@@ -48,6 +50,7 @@ class Store:
 
     @staticmethod
     def get_store(sentence):
+        create = False
         store_name = input(sentence)
         print(store_name, type(store_name))
         store_list = Store.store_chearch(store_name)
@@ -55,7 +58,7 @@ class Store:
             print("pas de magasins à ce nom")
         else:
             Display.display_store(store_list)
-            store_choice = Check.check_choice_list("choissez un nmagasin parmi la liste proposée ou bien quittez (q )")
+            store_choice = Check.check_choice_list(store_list, "choissez un nmagasin parmi la liste proposée ou bien quittez (q )")
         if (not store_list) or (store_choice == 'q'):
-            store_id = Store.record_store()
+            store_id = Store.new_store()
         return store_id

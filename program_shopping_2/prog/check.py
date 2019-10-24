@@ -8,19 +8,19 @@ class Check:
         while True:
             print(sentence, end=" ")
             choice = input()
+            if choice == 'q':
+                break
             try:
                 int(choice)
             except ValueError:
                 print("vous devez choisir un chiffre entier entre 1 et %s ou bien quitter ( q )" %max)
             else:
                 if int(choice) not in range(1, len(list_menu)+1):
-                    print(" ce chiffre ne fait pas parti des choix possibles")
-                elif choice == 'q':
-                    return choice
-                    break
+                    print(" cette réponse ne fait pas parti des choix possibles")
                 else:
+                    choice = list_menu[int(choice)-1]
                     break
-        return list_menu[int(choice)-1]
+        return choice
 
     @staticmethod
     def check_yn(sentence):
@@ -35,16 +35,17 @@ class Check:
     @staticmethod
     def check_cardcode(sentence):
         while True:
+            len_size = ""
             card_code = input(sentence)
+            if len(card_code) != 4:
+                len_size = "rentrez les 4 derniers chiffres de la carte"
             try:
                 int(card_code)
             except ValueError:
-                print('vous devez rentrer un nombre')
+                print("vous devez rentrer un nombre")
             else:
-                if len(card_code) > 4:
-                    print('rentrez un nombre entier de 4 chiffres')
-                else:
-                    break
+                print(len_size)
+                break
         return int(card_code)
 
     @staticmethod
