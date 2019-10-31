@@ -11,14 +11,26 @@ class Product:
                         great_category VARCHAR(100),
                         category VARCHAR(100),
                         sub_category VARCHAR(100),
-                        isfood BOOLEAN,
-                        processed_food BOOLEAN,
-                        coditionnded_weight DECIMAL(7,2)) DEFAULT 0;"""
+                        isfood BOOLEAN DEFAULT False,
+                        processed_food BOOLEAN DEFAULT False,
+                        conditionned_weight DECIMAL(7,2)) DEFAULT 0;"""
                         )
 
     @staticmethod
     def new_product(product_name):
-
+        great_category = Cat.choice_cat(great_category=True)
+        category = Cat.choice_cat(great_category, category=True)
+        if great_category == "nourriture":
+            isfood = True
+            sub_category, conditionned_weight = Cat.choice_cat(great_category, category, sub_category=True)
+            rep = Check.check_yn("Est_ce de la nourriture transformée? ")
+            if rep == "o":
+                processed_food = True
+        datas = product_name, great_category, category, sub_category, isfood, processed_food, conditionned_weight
+        with Connection.get_cursor() as cur:
+            sql = ("""INSERT INTO product(product_name, great_category, caegory, sub_category, isfood, processed_food, conditionned_weight)
+                   VALUES (%s, %s, %s, %s, %s, %s, %s);""")
+            cur.execute(sql, datas)
 
     @staticmethod
     def product_research(product_name):
