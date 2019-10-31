@@ -18,10 +18,9 @@ class Display:
         return choice
 
     @staticmethod
-    def display_store(store_list):
+    def display_store(store_list, sentence):
         for ind, elmt in enumerate(store_list):
             print("l'adresse du magasin n° %s est: " %str(ind+1))
-            print(elmt)
             print("nom: %s" %elmt[1])
             print("rue: %s" %elmt[2])
             print("numéro de la rue: %s" %elmt[3])

@@ -16,12 +16,23 @@ class Purchase:
                         purch BOOLEAN DEFAULT FALSE,
                         date DATE,
                         hour TIME,
-                        article_number INT,
+                    article_number INT DEFAULT 0,
                         total_price DECIMAL(5,2),
                         card_code INT,
                         store_id INT,
                         today TIMESTAMP DEFAULT now());"""
                         )
+
+    @staticmethod
+    def purchase_stop(purchase_id, nb_product):
+        with Connection.get_cursor() as cur:
+            cur.execute("""UPDATE purchase SET purch=True, article_number=0 WHERE id =%s; """ %purchase_id)
+
+
+    @staticmethod
+    def count_nb_product(purchase_id):
+        with Connection.get_cursor() as cur:
+            cur.execute("""SELECT COUNT(*) FROM purchase_product WHERE purchase_id = %s;""" %purchase_id)
 
     @staticmethod
     def change_code(card_code, list_card_code):
@@ -69,6 +80,8 @@ class Purchase:
             action_choice = Menu.display_menu(menu="second", sentence="quelle action voulez-vous effectuer sur cet achat ?")
             if action_choice == "continuer":
                 print("vous continuez l'enregistrement de cet achat")
+                purchase_id = purchase_incourse_list[choice][0]
+                Purchase_product.record_purchase_product(purchase_id)
             elif action_choice == "supprimer":
                 print("vous supprimez cet enregistrement")
                 Purchase.purchase_delete(purchase_choice[0])
@@ -103,8 +116,8 @@ class Purchase:
         return date, hour, card_code, today, store_id
 
     @staticmethod
-    def purchase_record(datas):
+    def purchase_record():
         with Connection.get_cursor() as cur:
             sql = ("""INSERT INTO purchase(date, hour, card_code, today, store_id)
                       VALUES(%s, %s, %s, %s, %s);""")
-            cur.execute(sql, datas)
+            cur.execute(sql, Purchase.purchase_get_data())

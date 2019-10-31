@@ -61,4 +61,6 @@ class Store:
             store_choice = Check.check_choice_list(store_list, "choissez un nmagasin parmi la liste proposée ou bien quittez (q )")
         if (not store_list) or (store_choice == 'q'):
             store_id = Store.new_store()
+        else:
+            store_id = store_choice
         return store_id
