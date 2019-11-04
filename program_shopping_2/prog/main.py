@@ -4,6 +4,7 @@ from tables import Tables
 from menu import Menu
 from database import Database
 from purchase import Purchase
+from purchase_product import Purchase_product
 
 class Shopping:
 
@@ -21,8 +22,7 @@ class Shopping:
                 Purchase.false_purchase()
             elif choice == "commencer un achat":
                 print(" vous voulez enregistrer un achat")
-                purchase_id = Purchase.purchase_record()
-                Purchase_product.record_purchase_product(purchase_id, product_name)
+                Purchase_product.record_purchase_product()
             elif choice == "explorer des données":
                 print(" vous voulez explorer les donnée enregistrée en base")
             else:

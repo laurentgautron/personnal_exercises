@@ -16,7 +16,7 @@ class Purchase:
                         purch BOOLEAN DEFAULT FALSE,
                         date DATE,
                         hour TIME,
-                    article_number INT DEFAULT 0,
+                        article_number INT DEFAULT 0,
                         total_price DECIMAL(5,2),
                         card_code INT,
                         store_id INT,
@@ -36,15 +36,17 @@ class Purchase:
 
     @staticmethod
     def change_code(card_code, list_card_code):
-        name = input("le nom de la pesonne à qui appartient le code")
+        Display.display_dict(list_card_code)
+        name = Check.check_choice_list(list(list_card_code.keys()), "le nom de la pesonne à qui appartient le code: ")
         list_status = ["compte perso", "compte commun"]
         Display.display(list_status)
         status = Check.check_choice_list(list_status, "de quel compte s'agit-il ? ")
         compte = "commun" if status == "compte commun" else "perso"
-        Display.display(list_card_code[name][compte])
-        code_to_remove = Check.check_choice_list(list_card_code[name][compte], "supprimez l'ancien numéro: ")
+        if list_card_code[name][compte]:
+            Display.display(list_card_code[name][compte])
+            code_to_remove = Check.check_choice_list(list_card_code[name][compte], "supprimez des numéros dans %s de %s: " %(status,name))
+            list_card_code[name][compte].remove(code_to_remove)
         list_card_code[name][compte].append(str(card_code))
-        list_card_code[name][compte].remove(code_to_remove)
         with open("card_list_code.json", "w") as file:
             json.dump(list_card_code, file)
 
@@ -105,9 +107,9 @@ class Purchase:
         while store_id == 0 or store_id =='q':
             store_id = Store.get_store("entrez le nom du magasin: ")
         while True:
-            card_code = Check.check_cardcode("entrez le numéro de carte ( les 4 dernier chiffres de la carte ): ")
+            card_code = Check.check_cardcode("entrez le numéro de carte de paiement ( les 4 dernier chiffres de la carte ): ")
             if not Purchase.card_code_isfind(list_card_code, card_code):
-                new_card = Check.check_yn("nouvelle carte ? ")
+                new_card = Check.check_yn("nouvelle carte (o/n)? ")
                 if new_card == 'o':
                     Purchase.change_code(card_code, list_card_code)
                     break

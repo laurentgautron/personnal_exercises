@@ -3,6 +3,11 @@ from check import Check
 class Display:
 
     @staticmethod
+    def display_dict(dict):
+        for indice,item in enumerate(dict):
+            print(indice+1, '-', item)
+
+    @staticmethod
     def display(list_menu):
         for ind, elmt in enumerate(list_menu):
             print(ind + 1, " - " + elmt)
@@ -18,7 +23,7 @@ class Display:
         return choice
 
     @staticmethod
-    def display_store(store_list, sentence):
+    def display_store(store_list):
         for ind, elmt in enumerate(store_list):
             print("l'adresse du magasin n° %s est: " %str(ind+1))
             print("nom: %s" %elmt[1])

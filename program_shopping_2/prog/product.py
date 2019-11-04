@@ -1,4 +1,5 @@
 from connection import Connection
+from cat import Cat
 
 class Product:
 
@@ -13,12 +14,13 @@ class Product:
                         sub_category VARCHAR(100),
                         isfood BOOLEAN DEFAULT False,
                         processed_food BOOLEAN DEFAULT False,
-                        conditionned_weight DECIMAL(7,2)) DEFAULT 0;"""
+                        conditionned_weight DECIMAL(7,2) DEFAULT 0);"""
                         )
 
     @staticmethod
     def new_product(product_name):
         great_category = Cat.choice_cat(great_category=True)
+        print("mais: ", great_category)
         category = Cat.choice_cat(great_category, category=True)
         if great_category == "nourriture":
             isfood = True
@@ -34,8 +36,10 @@ class Product:
 
     @staticmethod
     def product_research(product_name):
+        print('on a rentré le:', product_name)
         with Connection.get_cursor() as cur:
-            cur.execute("""SELECT * FROM product WHERE product_name = %s;""" %product_name)
+            sql = ("""SELECT * FROM product WHERE product_name = %s;""")
+            cur.execute(sql, (product_name,))
             product_list = cur.fetchall()
         return product_list
 

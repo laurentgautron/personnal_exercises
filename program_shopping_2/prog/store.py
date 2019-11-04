@@ -41,7 +41,7 @@ class Store:
         return store_id
 
     @staticmethod
-    def store_chearch(store_name):
+    def store_research(store_name):
         print("le type de store_name est: ", type(store_name))
         with Connection.get_cursor() as cur:
             cur.execute("SELECT * FROM store WHERE store.name = %s;", (store_name, ))
@@ -52,8 +52,7 @@ class Store:
     def get_store(sentence):
         create = False
         store_name = input(sentence)
-        print(store_name, type(store_name))
-        store_list = Store.store_chearch(store_name)
+        store_list = Store.store_research(store_name)
         if not store_list:
             print("pas de magasins à ce nom")
         else:
@@ -62,5 +61,5 @@ class Store:
         if (not store_list) or (store_choice == 'q'):
             store_id = Store.new_store()
         else:
-            store_id = store_choice
+            store_id = store_choice[0]
         return store_id

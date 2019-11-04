@@ -38,13 +38,12 @@ class Check:
             len_size = ""
             card_code = input(sentence)
             if len(card_code) != 4:
-                len_size = "rentrez les 4 derniers chiffres de la carte"
+                print("rentrez les 4 derniers chiffres de la carte")
             try:
                 int(card_code)
             except ValueError:
                 print("vous devez rentrer un nombre")
             else:
-                print(len_size)
                 break
         return int(card_code)
 
@@ -86,3 +85,17 @@ class Check:
                 else:
                     break
         return postcode
+
+    @staticmethod
+    def check_weight(sentence):
+        while true:
+            weight = input(sentence)
+            try:
+                float(weight)
+            except ValueError:
+                print("vous devez rentrer un  chiffre pour le poids ! ")
+            except TypeError:
+                print('vous devez mettre un point à la place de la virgule ! ')
+            else:
+                break
+        return weight
