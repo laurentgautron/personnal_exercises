@@ -8,12 +8,12 @@ class Check:
         while True:
             print(sentence, end=" ")
             choice = input()
-            if choice == 'q':
+            if choice in ('q','n'):
                 break
             try:
                 int(choice)
             except ValueError:
-                print("vous devez choisir un chiffre entier entre 1 et %s ou bien quitter ( q )" %max)
+                print("vous devez choisir un chiffre entier entre 1 et %s " %max)
             else:
                 if int(choice) not in range(1, len(list_menu)+1):
                     print(" cette réponse ne fait pas parti des choix possibles")
@@ -88,7 +88,7 @@ class Check:
 
     @staticmethod
     def check_weight(sentence):
-        while true:
+        while True:
             weight = input(sentence)
             try:
                 float(weight)
@@ -99,3 +99,8 @@ class Check:
             else:
                 break
         return weight
+
+    @staticmethod
+    def check_price():
+        price = input("entrer le prix: ")
+        return price

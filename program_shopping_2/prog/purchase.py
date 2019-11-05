@@ -31,8 +31,11 @@ class Purchase:
 
     @staticmethod
     def count_nb_product(purchase_id):
+        print("le purchas_id dans le count: ", purchase_id)
         with Connection.get_cursor() as cur:
             cur.execute("""SELECT COUNT(*) FROM purchase_product WHERE purchase_id = %s;""" %purchase_id)
+            count = cur.fetchone()
+        return count
 
     @staticmethod
     def change_code(card_code, list_card_code):
@@ -123,3 +126,7 @@ class Purchase:
             sql = ("""INSERT INTO purchase(date, hour, card_code, today, store_id)
                       VALUES(%s, %s, %s, %s, %s);""")
             cur.execute(sql, Purchase.purchase_get_data())
+        with Connection.get_cursor() as cur:
+            cur.execute("SELECT MAX(id) FROM purchase;")
+            purchase_id = cur.fetchone()
+        return purchase_id[0]
