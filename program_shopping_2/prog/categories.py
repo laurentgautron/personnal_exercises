@@ -17,21 +17,17 @@ class Categories:
             select_list = list(categories_list[great_category].keys())
         elif rank == 3:
             select_list = categories_list[great_category][category]
-        print("la liste est: ", select_list)
         if select_list:
             Display.display(select_list)
             choice = Check.check_choice_list(select_list, "choisssez dans la liste ou bien ajoutez une nouveauté ( tapez n ): ")
         if (not select_list) or (choice == 'n'):
-            print("la food dans le choicede cat: ", food)
             choice = Categories.create(categories_list=categories_list,great_category=great_category, category=category,rank=rank)
-        print("le choix : ", choice)
         return choice
 
     @staticmethod
     def create(categories_list, great_category, category, rank):
         if rank == 1:
             name_in_list = input("la liste est complètement vide: rentrez une grande catégorie: ")
-            print("le name_in_list:", name_in_list)
             categories_list[name_in_list] = {} if name_in_list=='nourriture' else []
         elif rank == 2:
             name_in_list = input("rentrez l'élément que vous voulez rajouter: ")

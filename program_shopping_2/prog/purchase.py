@@ -5,6 +5,7 @@ from display import Display
 from menu import Menu
 from check import Check
 from store import Store
+from purchase_product import Purchase_product
 
 class Purchase:
 
@@ -24,18 +25,17 @@ class Purchase:
                         )
 
     @staticmethod
-    def purchase_stop(purchase_id, nb_product):
+    def purchase_close(purchase_id, nb_product):
         with Connection.get_cursor() as cur:
-            cur.execute("""UPDATE purchase SET purch=True, article_number=0 WHERE id =%s; """ %purchase_id)
+            cur.execute("""UPDATE purchase SET purch=True, article_number=%s WHERE id =%s; """ %(nb_product, purchase_id))
 
 
     @staticmethod
     def count_nb_product(purchase_id):
-        print("le purchas_id dans le count: ", purchase_id)
         with Connection.get_cursor() as cur:
             cur.execute("""SELECT COUNT(*) FROM purchase_product WHERE purchase_id = %s;""" %purchase_id)
             count = cur.fetchone()
-        return count
+        return count[0]
 
     @staticmethod
     def change_code(card_code, list_card_code):
@@ -69,30 +69,61 @@ class Purchase:
             return find_someone
 
     @staticmethod
+    def record_purchase_product(purchase_id=None):
+        product_name = ""
+        rep = ''
+        nb_product = 0
+        while rep != 'q':
+            if purchase_id != None:
+                nb_product = Purchase.count_nb_product(purchase_id)
+                print("il y a déjà %s produits enregistrés pour cet achat" %nb_product)
+            else:
+                print ("vous commencez l'enregistrement de l'achat !")
+                purchase_id = Purchase.purchase_record()
+            product_name = input("rentrez le nom d'un produit ou bien 'q' pour quitter: ")
+            if product_name=='q':
+                break
+            product_id, price, weight = Purchase_product.purch_pro_get_datas(product_name)
+            datas = (purchase_id, product_id, price, weight)
+            with Connection.get_cursor() as cur:
+                sql = ("""INSERT INTO purchase_product(purchase_id, product_id, price, weight)
+                       VALUES (%s, %s, %s, %s);""")
+                cur.execute(sql, datas)
+        stop_record = Check.check_yn("vous arrétez l'enregistrement de produits, avez_vous fini l'enregistrement ?")
+        if stop_record == 'o':
+            Purchase.purchase_close(purchase_id, nb_product)
+
+    @staticmethod
     def purchase_delete(purchase_choice):
         with Connection.get_cursor() as cur:
             cur.execute("DELETE FROM purchase WHERE id = %s;" %purchase_choice)
 
     @staticmethod
     def false_purchase():
-        with Connection.get_cursor() as cur:
-            cur.execute("""SELECT * FROM purchase WHERE purch = False;""")
-            purchase_incourse_list = cur.fetchall()
-        if not purchase_incourse_list:
-            print("la liste est vide: pas de ticket en cours d'enregistrement")
-        while purchase_incourse_list:
-            purchase_choice = Display.display_values(purchase_incourse_list, "choisissez un élément de la liste: ")
-            action_choice = Menu.display_menu(menu="second", sentence="quelle action voulez-vous effectuer sur cet achat ?")
-            if action_choice == "continuer":
-                print("vous continuez l'enregistrement de cet achat")
-                purchase_id = purchase_incourse_list[choice][0]
-                Purchase_product.record_purchase_product(purchase_id)
-            elif action_choice == "supprimer":
-                print("vous supprimez cet enregistrement")
-                Purchase.purchase_delete(purchase_choice[0])
-                purchase_incourse_list.remove(purchase_choice)
+        want_to_continue = True
+        while want_to_continue:
+            with Connection.get_cursor() as cur:
+                cur.execute("""SELECT * FROM purchase WHERE purch = False;""")
+                purchase_incourse_list = cur.fetchall()
+            if not purchase_incourse_list:
+                print("la liste est vide: pas de ticket en cours d'enregistrement")
             else:
-                break
+                user_choice = Display.display_values(purchase_incourse_list, "choisissez un élément de la liste: ")
+                action_choice = Menu.display_menu(menu="second", sentence="quelle action voulez-vous effectuer sur cet achat ?")
+                if action_choice == "continuer":
+                    print("vous continuez l'enregistrement de cet achat")
+                    purchase_id = user_choice[0]
+                    print("le purchase_false choisi: ", purchase_id)
+                    Purchase.record_purchase_product(purchase_id)
+                elif action_choice == "supprimer":
+                    print("vous supprimez cet enregistrement")
+                    Purchase.purchase_delete(user_choice[0])
+                    purchase_incourse_list.remove(user_choice)
+                else:
+                    break
+                user_pursue = Check.check_yn("voulez-vous poursuivre a consulter les achats en cours ? ")
+                if user_pursue=='n':
+                    want_to_continue =False
 
     @staticmethod
     def purchase_get_data():

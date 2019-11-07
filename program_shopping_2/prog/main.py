@@ -22,7 +22,7 @@ class Shopping:
                 Purchase.false_purchase()
             elif choice == "commencer un achat":
                 print(" vous voulez enregistrer un achat")
-                Purchase_product.record_purchase_product()
+                Purchase.record_purchase_product()
             elif choice == "explorer des données":
                 print(" vous voulez explorer les donnée enregistrée en base")
             else:

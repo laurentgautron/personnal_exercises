@@ -42,7 +42,6 @@ class Store:
 
     @staticmethod
     def store_research(store_name):
-        print("le type de store_name est: ", type(store_name))
         with Connection.get_cursor() as cur:
             cur.execute("SELECT * FROM store WHERE store.name = %s;", (store_name, ))
             store_list = cur.fetchall()

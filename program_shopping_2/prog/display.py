@@ -16,7 +16,7 @@ class Display:
     def display_values(values_list, sentence):
         for ind, elmt in enumerate(values_list):
             print(ind+1, " - ", end="")
-            elmt = elmt[2:]
+            elmt = elmt[1:]
             print(elmt, sep=", ")
         choice = Check.check_choice_list(values_list, sentence)
         print("vous avez choisi: " + ' ', choice)

@@ -87,20 +87,19 @@ class Check:
         return postcode
 
     @staticmethod
-    def check_weight(sentence):
+    def check_weight_price(sentence, price=False, weight=False):
         while True:
-            weight = input(sentence)
+            number = input(sentence)
             try:
-                float(weight)
+                float(number)
             except ValueError:
-                print("vous devez rentrer un  chiffre pour le poids ! ")
+                print("vous devez rentrer un  chiffre ! ")
             except TypeError:
                 print('vous devez mettre un point à la place de la virgule ! ')
+            if weight and float(weight)>15:
+                print("ce poids n'est pas autorisé !!")
+            elif price and float(price)>300:
+                print("ce prix n'est pas autorisé")
             else:
                 break
-        return weight
-
-    @staticmethod
-    def check_price():
-        price = input("entrer le prix: ")
-        return price
+        return number
