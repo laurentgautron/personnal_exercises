@@ -19,7 +19,6 @@ class Display:
             elmt = elmt[1:]
             print(elmt, sep=", ")
         choice = Check.check_choice_list(values_list, sentence)
-        print("vous avez choisi: " + ' ', choice)
         return choice
 
     @staticmethod

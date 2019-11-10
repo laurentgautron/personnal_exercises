@@ -16,9 +16,15 @@ class Purchase_product:
                         )
 
     @staticmethod
-    def purch_pro_get_datas(product_name, food = False):
-        product_id, weight = Product.product_get_datas(product_name)
+    def purch_pro_get_datas(product_name, food=False):
+        product_id = weight = None
+        print("product et weight dans purchpro get datas: ", (product_id, weight))
+        print("le food dans purchet pro de purchase_product: ", food)
+        product_id, weight, food = Product.product_get_datas(product_name)
         if weight == None and food:
             weight = Check.check_weight_price("entrez le poids du produit: ", weight=True)
-        price = Check.check_weight_price("entrez le prix de l'article", price=True)
+        if product_id:
+            price = Check.check_weight_price("entrez le prix de l'article: ", price=True)
+        else:
+            price = None
         return product_id, price, weight

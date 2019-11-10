@@ -25,17 +25,16 @@ class Purchase:
                         )
 
     @staticmethod
-    def purchase_close(purchase_id, nb_product):
+    def purchase_close(purchase_id, nb_product, total_price):
         with Connection.get_cursor() as cur:
-            cur.execute("""UPDATE purchase SET purch=True, article_number=%s WHERE id =%s; """ %(nb_product, purchase_id))
-
+            cur.execute("""UPDATE purchase SET purch=True, article_number=%s, total_price=%s WHERE id =%s; """ %(nb_product, total_price, purchase_id))
 
     @staticmethod
-    def count_nb_product(purchase_id):
+    def count_nb_product_total_price(purchase_id):
         with Connection.get_cursor() as cur:
-            cur.execute("""SELECT COUNT(*) FROM purchase_product WHERE purchase_id = %s;""" %purchase_id)
+            cur.execute("""SELECT COUNT(*), SUM(price) FROM purchase_product WHERE purchase_id = %s;""" %purchase_id)
             count = cur.fetchone()
-        return count[0]
+        return count[0], count[1]
 
     @staticmethod
     def change_code(card_code, list_card_code):
@@ -73,10 +72,12 @@ class Purchase:
         product_name = ""
         rep = ''
         nb_product = 0
-        while rep != 'q':
+        total_price = 0
+        product_id = None
+        while rep != 'q' or product_id==None:
             if purchase_id != None:
-                nb_product = Purchase.count_nb_product(purchase_id)
-                print("il y a déjà %s produits enregistrés pour cet achat" %nb_product)
+                nb_product, total_price = Purchase.count_nb_product_total_price(purchase_id)
+                print("il y a déjà %s produits enregistrés pour cet achat pour un montant de %s euros !" %(nb_product, total_price))
             else:
                 print ("vous commencez l'enregistrement de l'achat !")
                 purchase_id = Purchase.purchase_record()
@@ -84,14 +85,16 @@ class Purchase:
             if product_name=='q':
                 break
             product_id, price, weight = Purchase_product.purch_pro_get_datas(product_name)
+            print("le product_id dans le purchase.record_purchase_product: ", product_id)
             datas = (purchase_id, product_id, price, weight)
-            with Connection.get_cursor() as cur:
-                sql = ("""INSERT INTO purchase_product(purchase_id, product_id, price, weight)
-                       VALUES (%s, %s, %s, %s);""")
-                cur.execute(sql, datas)
-        stop_record = Check.check_yn("vous arrétez l'enregistrement de produits, avez_vous fini l'enregistrement ?")
+            if product_id != None:
+                with Connection.get_cursor() as cur:
+                    sql = ("""INSERT INTO purchase_product(purchase_id, product_id, price, weight)
+                           VALUES (%s, %s, %s, %s);""")
+                    cur.execute(sql, datas)
+        stop_record = Check.check_yn("vous arrétez l'enregistrement de produits, avez_vous fini l'enregistrement ? ")
         if stop_record == 'o':
-            Purchase.purchase_close(purchase_id, nb_product)
+            Purchase.purchase_close(purchase_id, nb_product, total_price)
 
     @staticmethod
     def purchase_delete(purchase_choice):
@@ -107,13 +110,13 @@ class Purchase:
                 purchase_incourse_list = cur.fetchall()
             if not purchase_incourse_list:
                 print("la liste est vide: pas de ticket en cours d'enregistrement")
+                want_to_continue = False
             else:
                 user_choice = Display.display_values(purchase_incourse_list, "choisissez un élément de la liste: ")
                 action_choice = Menu.display_menu(menu="second", sentence="quelle action voulez-vous effectuer sur cet achat ?")
                 if action_choice == "continuer":
                     print("vous continuez l'enregistrement de cet achat")
                     purchase_id = user_choice[0]
-                    print("le purchase_false choisi: ", purchase_id)
                     Purchase.record_purchase_product(purchase_id)
                 elif action_choice == "supprimer":
                     print("vous supprimez cet enregistrement")

@@ -25,9 +25,10 @@ class Store:
         return store_last_id
 
     @staticmethod
-    def new_store():
+    def new_store(name=None):
         print("vous allez créer un magasin")
-        name = input("entrez le nom du magasin: ")
+        if name == None:
+            name = input("entrez le nom du magasin: ")
         road = input("entrez le nom de la rue: ")
         road_number = input("entrez le numéro de la rue: ")
         town = input("entrez le nom de la ville: ")
@@ -52,13 +53,16 @@ class Store:
         create = False
         store_name = input(sentence)
         store_list = Store.store_research(store_name)
+        store_id = 0
         if not store_list:
             print("pas de magasins à ce nom")
         else:
             Display.display_store(store_list)
             store_choice = Check.check_choice_list(store_list, "choissez un nmagasin parmi la liste proposée ou bien quittez (q )")
         if (not store_list) or (store_choice == 'q'):
-            store_id = Store.new_store()
+            new_store = input("voulez-vous enregistrer ce magasin ? ")
+            if new_store == 'o':
+                store_id = Store.new_store()
         else:
             store_id = store_choice[0]
         return store_id

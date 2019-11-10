@@ -8,7 +8,7 @@ class Check:
         while True:
             print(sentence, end=" ")
             choice = input()
-            if choice in ('q','n'):
+            if choice in ('q', 'n', 'r'):
                 break
             try:
                 int(choice)
