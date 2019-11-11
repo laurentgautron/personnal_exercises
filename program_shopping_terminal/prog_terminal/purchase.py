@@ -81,7 +81,7 @@ class Purchase:
             else:
                 print ("vous commencez l'enregistrement de l'achat !")
                 purchase_id = Purchase.purchase_record()
-            product_name = input("rentrez le nom d'un produit ou bien 'q' pour quitter: ")
+            product_name = input("rentrez le nom d'un produit ou bien quittez (taper q): ")
             if product_name=='q':
                 break
             product_id, price, weight = Purchase_product.purch_pro_get_datas(product_name)
@@ -100,6 +100,7 @@ class Purchase:
     def purchase_delete(purchase_choice):
         with Connection.get_cursor() as cur:
             cur.execute("DELETE FROM purchase WHERE id = %s;" %purchase_choice)
+            cur.execute("DELETE FROM purchase_product WHERE purchase_id = %s;" %purchase_choice)
 
     @staticmethod
     def false_purchase():
@@ -115,13 +116,12 @@ class Purchase:
                 user_choice = Display.display_values(purchase_incourse_list, "choisissez un élément de la liste: ")
                 action_choice = Menu.display_menu(menu="second", sentence="quelle action voulez-vous effectuer sur cet achat ?")
                 if action_choice == "continuer":
-                    print("vous continuez l'enregistrement de cet achat")
+                    print("vous continuez l'enregistrement de cet achat! ")
                     purchase_id = user_choice[0]
                     Purchase.record_purchase_product(purchase_id)
                 elif action_choice == "supprimer":
                     print("vous supprimez cet enregistrement")
                     Purchase.purchase_delete(user_choice[0])
-                    purchase_incourse_list.remove(user_choice)
                 else:
                     break
                 user_pursue = Check.check_yn("voulez-vous poursuivre a consulter les achats en cours ? ")
